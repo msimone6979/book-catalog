@@ -1,0 +1,1 @@
+GRANT ALL PRIVILEGES ON catalogo_libri.* TO 'bookuser'@'localhost' IDENTIFIED BY 'bookpassword';
