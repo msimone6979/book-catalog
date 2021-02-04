@@ -53,7 +53,8 @@ final class Versions
   'symfony/polyfill-php80' => 'v1.22.0@dc3063ba22c2a1fd2f45ed856374d79114998f91',
   'symfony/service-contracts' => 'v1.1.9@b776d18b303a39f56c63747bcb977ad4b27aca26',
   'symfony/yaml' => 'v2.8.52@02c1859112aa779d9ab394ae4f3381911d84052b',
-  '__root__' => 'dev-master@e35a2c160e31cc863628868deeb8eabc31203cea',
+  'twig/twig' => 'v3.2.1@f795ca686d38530045859b0350b5352f7d63447d',
+  '__root__' => 'dev-master@1c1333fed90d89b8814d3d06c609d272577f95dd',
 );
 
     private function __construct()
