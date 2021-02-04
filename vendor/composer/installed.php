@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'e35a2c160e31cc863628868deeb8eabc31203cea',
+    'reference' => '1c1333fed90d89b8814d3d06c609d272577f95dd',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'e35a2c160e31cc863628868deeb8eabc31203cea',
+      'reference' => '1c1333fed90d89b8814d3d06c609d272577f95dd',
     ),
     'composer/package-versions-deprecated' => 
     array (
@@ -213,6 +213,15 @@
       array (
       ),
       'reference' => '02c1859112aa779d9ab394ae4f3381911d84052b',
+    ),
+    'twig/twig' => 
+    array (
+      'pretty_version' => 'v3.2.1',
+      'version' => '3.2.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f795ca686d38530045859b0350b5352f7d63447d',
     ),
   ),
 );

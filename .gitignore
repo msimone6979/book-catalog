@@ -1,3 +1,20 @@
+# System Files
 .DS_Store
-node_modules/
-docs/
+Thumbs.bd
+
+# Dependencies
+/node_modules
+/vendor
+
+/docs/sql
+
+# IDE - VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
