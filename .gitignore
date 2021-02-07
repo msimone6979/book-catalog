@@ -6,7 +6,7 @@ Thumbs.bd
 /node_modules
 /vendor
 
-/docs/sql
+/docs/sql/*
 
 # IDE - VS Code
 .vscode/*
