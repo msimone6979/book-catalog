@@ -54,7 +54,7 @@ final class Versions
   'symfony/service-contracts' => 'v1.1.9@b776d18b303a39f56c63747bcb977ad4b27aca26',
   'symfony/yaml' => 'v2.8.52@02c1859112aa779d9ab394ae4f3381911d84052b',
   'twig/twig' => 'v3.2.1@f795ca686d38530045859b0350b5352f7d63447d',
-  '__root__' => 'dev-master@1c1333fed90d89b8814d3d06c609d272577f95dd',
+  '__root__' => 'dev-master@39c568cae3d74d3c98117863f113557a00d03d14',
 );
 
     private function __construct()

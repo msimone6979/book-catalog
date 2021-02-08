@@ -31,6 +31,11 @@ class Utente
     private $username;
 
     /**
+     * @Column(type="string")
+     */
+    private $password;
+
+    /**
      * @Column(type="smallint", options={"default":"0"})
      */
     private $livello;
@@ -114,6 +119,26 @@ class Utente
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
         return $this;
     }
