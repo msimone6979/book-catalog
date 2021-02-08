@@ -33,6 +33,10 @@ class ComposerStaticInit91ae608b8e53a950a693fd66c91466d1
             'Psr\\Container\\' => 14,
             'PackageVersions\\' => 16,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
         'D' => 
         array (
             'Doctrine\\Persistence\\' => 21,
@@ -88,6 +92,10 @@ class ComposerStaticInit91ae608b8e53a950a693fd66c91466d1
         'PackageVersions\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/package-versions-deprecated/src/PackageVersions',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
         'Doctrine\\Persistence\\' => 
         array (

@@ -45,6 +45,7 @@ final class Versions
   'doctrine/lexer' => '1.0.2@1febd6c3ef84253d7c815bed85fc622ad207a9f8',
   'doctrine/orm' => '2.7.5@01187c9260cd085529ddd1273665217cae659640',
   'doctrine/persistence' => '2.1.0@9899c16934053880876b920a3b8b02ed2337ac1d',
+  'fzaninotto/faker' => 'v1.9.2@848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
   'psr/container' => '1.0.0@b7ce3b176482dbbc1245ebf52b181af44c2cf55f',
   'symfony/console' => 'v4.4.18@12e071278e396cc3e1c149857337e9e192deca0b',
   'symfony/polyfill-ctype' => 'v1.22.0@c6c942b1ac76c82448322025e084cadc56048b4e',
@@ -54,7 +55,7 @@ final class Versions
   'symfony/service-contracts' => 'v1.1.9@b776d18b303a39f56c63747bcb977ad4b27aca26',
   'symfony/yaml' => 'v2.8.52@02c1859112aa779d9ab394ae4f3381911d84052b',
   'twig/twig' => 'v3.2.1@f795ca686d38530045859b0350b5352f7d63447d',
-  '__root__' => 'dev-master@39c568cae3d74d3c98117863f113557a00d03d14',
+  '__root__' => 'dev-master@d9aa59f5fe674bf447cc71f9599ddb6b7caa569c',
 );
 
     private function __construct()

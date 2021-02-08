@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '1c1333fed90d89b8814d3d06c609d272577f95dd',
+    'reference' => 'd9aa59f5fe674bf447cc71f9599ddb6b7caa569c',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '1c1333fed90d89b8814d3d06c609d272577f95dd',
+      'reference' => 'd9aa59f5fe674bf447cc71f9599ddb6b7caa569c',
     ),
     'composer/package-versions-deprecated' => 
     array (
@@ -150,6 +150,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '9899c16934053880876b920a3b8b02ed2337ac1d',
+    ),
+    'fzaninotto/faker' => 
+    array (
+      'pretty_version' => 'v1.9.2',
+      'version' => '1.9.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
     ),
     'ocramius/package-versions' => 
     array (
