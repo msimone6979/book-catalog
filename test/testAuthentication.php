@@ -1,10 +1,8 @@
 <?php
-require_once "../bootstrap.php";
-require_once "../entities/AuthenticationRepository.php";
 require_once "../entities/Utente.php";
+require_once "../repository/UtenteRepository.php";
 
-use entities\Utente;
-
-$res =  $entity_manager->getRepository('Utente')->doAutenthicate('msimone', 'password');
+$utenteRepository = new UtenteRepository();
+$res = $utenteRepository->doAutenthicate('msimone', 'password');
 
 var_dump($res);

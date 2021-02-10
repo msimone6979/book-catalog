@@ -9,5 +9,5 @@ $volumeRepository = $entity_manager->getRepository(Volume::class);
 $volumi = $volumeRepository->findAll();
 
 foreach ($volumi as $v) {
-    echo sprintf("-%s\n", $v->getTitolo());
+    echo sprintf("-%s \t %s  \n", $v->getTitolo() , $v->getAutore()->getNome());
 }

@@ -1,27 +1,22 @@
 <?php
 session_start();
 
-require_once 'inc/inc.conf.php';
-require_once 'inc/inc.func.php';
-require_once 'dao/dao_utente.php';
-require_once 'class/utente.php';
+require_once "repository/UtenteRepository.php";
 
 $login=$_POST['username'];
-$password = sha1(md5($_POST['password'].$token));
+$password = $_POST['password']; //sha1(md5($_POST['password'].$token));
 
-if(isset($_POST['username']) && isset($_POST['password']) && check_content_valid_chars($_POST['username'])
-		&& check_content_valid_chars($_POST['password'])) {
+if(isset($_POST['username']) && isset($_POST['password']) ) {
 	$error=null;
 
-	$user= new Utente();
-	$user = dao_utente::doLogin($login, $password);
-	
+	$utenteRepository = new UtenteRepository();
+	$user = $utenteRepository->doAutenthicate($_POST['username'], $_POST['password']);
 	
 	if (!empty($user)){
-		$_SESSION['user']['nome'] = $user->getNome();
-		$_SESSION['user']['cognome'] = $user->getCognome();
-		$_SESSION['user']['username'] = $user->getUsername();
-		$_SESSION['user']['id'] = $user->getId();
+		$_SESSION['user']['nome'] = $user[0]->getNome();
+		$_SESSION['user']['cognome'] = $user[0]->getCognome();
+		$_SESSION['user']['username'] = $user[0]->getUsername();
+		$_SESSION['user']['id'] = $user[0]->getId();
 		
 		header("Location: ./dashboard.php");
 
