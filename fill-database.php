@@ -16,7 +16,7 @@ $volume = new Volume();
 // https://stackoverflow.com/questions/9686888/how-to-truncate-a-table-using-doctrine-2
 
 $faker = Faker\Factory::create('it_IT');
-/*
+
 // Autore 
 $numAutori = rand(0, 20);
 for ($i = 0; $i < $numAutori; $i++) {
@@ -44,7 +44,7 @@ for ($i = 0; $i < $numCasaEditrice; $i++) {
     $entity_manager->flush();
 }
 echo "Generate $numCasaEditrice case editrici ";
-*/
+
 
 // Volume 
 $numVolume = rand(0, 40);

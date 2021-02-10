@@ -1,6 +1,7 @@
 <?php
 require_once "vendor/autoload.php";
 
+
 // Setup Doctrine
 $configuration = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
     $paths = [__DIR__ . '/entities'],
