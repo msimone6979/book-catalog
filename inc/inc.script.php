@@ -1,4 +1,6 @@
 <script src="./node_modules/gentelella/vendors/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
 <!--<script src="./node_modules/gentelella/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="./node_modules/gentelella/vendors/fastclick/lib/fastclick.js"></script>
 <script src="./node_modules/gentelella/vendors/nprogress/nprogress.js"></script>
@@ -21,4 +23,6 @@
 <script src="./node_modules/gentelella/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 <script src="./node_modules/gentelella/vendors/moment/min/moment.min.js"></script>
 <script src="./node_modules/gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
- <script src="./node_modules/gentelella/build/js/custom.js"></script>
+<script src="./node_modules/gentelella/build/js/custom.js"></script>
+<!-- Bootstrap Dialog -->
+<script src="./node_modules/bootbox/bootbox.js"></script>

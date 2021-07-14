@@ -1,6 +1,6 @@
 <?php
-include_once "bootstrap.php";
-include_once "entities/Utente.php";
+require __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../entities/Utente.php';
 
 use entities\Utente;
 
@@ -30,6 +30,11 @@ class UtenteRepository
 
     function getList()
     {
-        return $this->em->getRepository("entities\Utente")->findAll();
+
+        $query = $this->em->createQuery(
+            'SELECT u
+            FROM entities\Utente u'
+        );
+        return $query->getArrayResult();
     }
 }
