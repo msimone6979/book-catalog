@@ -50,12 +50,15 @@ final class Versions
   'fzaninotto/faker' => 'v1.9.2@848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
   'guzzlehttp/psr7' => '1.8.2@dc960a912984efb74d0a90222870c72c87f10c91',
   'http-interop/http-factory-guzzle' => '1.0.0@34861658efb9899a6618cef03de46e2a52c80fc0',
+  'jms/metadata' => '2.5.0@b5c52549807b2d855b3d7e36ec164c00eb547338',
+  'jms/serializer' => '3.12.3@f908d17afd08f0aab9c083322022682b41483c5b',
   'laminas/laminas-diactoros' => '2.6.0@7d2034110ae18afe05050b796a3ee4b3fe177876',
   'laminas/laminas-zendframework-bridge' => '1.2.0@6cccbddfcfc742eb02158d6137ca5687d92cee32',
   'nikic/fast-route' => 'v1.3.0@181d480e08d9476e61381e04a71b34dc0432e812',
   'nyholm/psr7' => '1.4.0@23ae1f00fbc6a886cbe3062ca682391b9cc7c37b',
   'nyholm/psr7-server' => '1.0.2@b846a689844cef114e8079d8c80f0afd96745ae3',
   'php-http/message-factory' => 'v1.0.2@a478cb11f66a6ac48d8954216cfed9aa06a501a1',
+  'phpstan/phpdoc-parser' => '0.5.5@ea0b17460ec38e20d7eb64e7ec49b5d44af5d28c',
   'psr/cache' => '1.0.1@d11b50ad223250cf17b86e38383413f5a6764bf8',
   'psr/container' => '1.1.1@8622567409010282b7aeebe4bb841fe98b58dcaf',
   'psr/http-factory' => '1.0.1@12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
@@ -110,7 +113,7 @@ final class Versions
   'sebastian/version' => '3.0.2@c6c1022351a901512170118436c764e473f6de8c',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.10.0@6964c76c7804814a842473e0c8fd15bab0f18e25',
-  '__root__' => 'dev-master@8de41db830e3c2050bbb3459679e12ee34a662a2',
+  '__root__' => 'dev-master@e658604ad3845ec1cdad8a647eccb6f18a71136e',
 );
 
     private function __construct()

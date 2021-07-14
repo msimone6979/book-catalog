@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '8de41db830e3c2050bbb3459679e12ee34a662a2',
+    'reference' => 'e658604ad3845ec1cdad8a647eccb6f18a71136e',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '8de41db830e3c2050bbb3459679e12ee34a662a2',
+      'reference' => 'e658604ad3845ec1cdad8a647eccb6f18a71136e',
     ),
     'composer/package-versions-deprecated' => 
     array (
@@ -196,6 +196,24 @@ private static $installed = array (
       ),
       'reference' => '34861658efb9899a6618cef03de46e2a52c80fc0',
     ),
+    'jms/metadata' => 
+    array (
+      'pretty_version' => '2.5.0',
+      'version' => '2.5.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b5c52549807b2d855b3d7e36ec164c00eb547338',
+    ),
+    'jms/serializer' => 
+    array (
+      'pretty_version' => '3.12.3',
+      'version' => '3.12.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f908d17afd08f0aab9c083322022682b41483c5b',
+    ),
     'laminas/laminas-diactoros' => 
     array (
       'pretty_version' => '2.6.0',
@@ -332,6 +350,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'be1996ed8adc35c3fd795488a653f4b518be70ea',
+    ),
+    'phpstan/phpdoc-parser' => 
+    array (
+      'pretty_version' => '0.5.5',
+      'version' => '0.5.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ea0b17460ec38e20d7eb64e7ec49b5d44af5d28c',
     ),
     'phpunit/php-code-coverage' => 
     array (

@@ -2,6 +2,17 @@
 
 namespace entities;
 
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ManyToOne;
+
+require_once __DIR__ . '/../entities/Volume.php';
+
+use entities\Volume;
+
 /**
  * @Entity
  * @Table(name="autore")
@@ -14,6 +25,11 @@ class Autore
      * @Column(type="smallint")
      */
     private $id;
+
+    /**
+     * @ManyToOne(targetEntity="entities\Volume", inversedBy="volume")
+     */
+    private $volume;
 
     /**
      * @Column(type="string")

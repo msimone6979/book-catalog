@@ -1,0 +1,31 @@
+{
+  "name": "book-catalog",
+  "version": "1.0.0",
+  "description": "Application to handle a catalog of books",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootbox": "^5.5.2",
+    "bootstrap": "^5.0.2",
+    "gentelella": "^1.4.0",
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msimone6979/book-catalog.git"
+  },
+  "author": "Matteo Simone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msimone6979/book-catalog/issues"
+  },
+  "homepage": "https://github.com/msimone6979/book-catalog#readme"
+}

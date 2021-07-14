@@ -1,6 +1,6 @@
 <?php
-include_once "bootstrap.php";
-include_once "entities/Autore.php";
+require __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../entities/Autore.php';
 
 use entities\Autore;
 
@@ -17,6 +17,15 @@ class AutoreRepository
 
     function getList()
     {
-        return $this->em->getRepository("entities\Autore")->findAll();
+        $query = $this->em->createQuery(
+            'SELECT a
+            FROM entities\Autore a'
+        );
+        return $query->getArrayResult();
+    }
+
+    function findById($id)
+    {
+        return $this->em->getRepository('entities\Autore')->findOneBy(array('id' => $id));
     }
 }

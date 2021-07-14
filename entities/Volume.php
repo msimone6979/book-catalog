@@ -2,11 +2,20 @@
 
 namespace entities;
 
-require_once "entities/Volume.php";
-require_once "entities/Utente.php";
-require_once "entities/Autore.php";
-require_once "entities/CasaEditrice.php";
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
+
+
+
+require_once __DIR__ . '/../entities/Utente.php';
+require_once __DIR__ . '/../entities/Autore.php';
+require_once __DIR__ . '/../entities/CasaEditrice.php';
 
 /**
  * @Entity
