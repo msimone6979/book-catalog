@@ -1,0 +1,28 @@
+.mt-50 {
+  margin-top: 50px;
+}
+
+.btn-inverse-danger {
+  color: #d9534f;
+  background-color: #fff;
+  border-color: #d43f3a;
+}
+
+.total-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  font-size: 1.2em;
+}
+
+#tabella_volumi tbody tr {
+  cursor: pointer;
+}
+
+.immagine-small {
+  width: 100px;
+}
+
+#tabella_volumi td {
+  vertical-align: middle;
+}
