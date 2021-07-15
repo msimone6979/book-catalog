@@ -126,10 +126,10 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
     } catch (Exception $exception) {
-        $response = (new Response())->withStatus(404);
-        $response->getBody()->write('Errore');
 
-        return $response;
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
     }
 });
 
