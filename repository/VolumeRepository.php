@@ -9,6 +9,7 @@ require_once __DIR__ . '/../entities/CasaEditrice.php';
 use entities\Volume;
 use entities\Autore;
 use entities\CasaEditrice;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class VolumeRepository
 {
@@ -66,5 +67,15 @@ class VolumeRepository
         $v->setFormatoCartaceo($volume->getFormatoCartaceo());
         $v->setFormatoEbook($volume->getFormatoEbook());
         $this->em->flush();
+    }
+
+    function save($volume)
+    {
+        try {
+            $this->em->persist($volume);
+            $this->em->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new Exception("Esiste già un volume con il titolo specificato");
+        }
     }
 }

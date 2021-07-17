@@ -167,8 +167,7 @@ session_start();
                      type: 'DELETE',
                      contentType: "application/json",
                      error: function(data) {
-                        $('#esito').removeClass('alert-danger');
-                        $('#esito').removeClass('alert-success');
+                        $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
 
                         if (data.status === 200) {
                            bootbox.alert(
