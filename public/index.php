@@ -1,10 +1,10 @@
 <?php
 
 use entities\CasaEditrice;
+use entities\Volume;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-use Slim\Exception\HttpNotFoundException;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../Repository/VolumeRepository.php';
@@ -30,14 +30,6 @@ $app->get('/hello/{name}', function (Request $request, Response $response, $args
 $app->get('/test', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Test !!!");
     return $response;
-    /* $data = array('name' => 'Rob', 'age' => 40);
-    $payload = json_encode($data);
-
-    $response->getBody()->write($payload);
-    return $response
-          ->withHeader('Content-Type', 'application/json')
-          ->withStatus(201);
-          */
 });
 
 /***
@@ -127,6 +119,61 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
             ->withStatus(200);
     } catch (Exception $exception) {
 
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+$app->addBodyParsingMiddleware();
+$app->post('/volume', function (Request $request, Response $response) {
+
+    try {
+
+        $request_data = $request->getParsedBody();
+
+        $titolo = $request_data['titolo'];
+        $descrizione = $request_data['descrizione'];
+        $genere = $request_data['genere'];
+        $anno = $request_data['anno'];
+        $pagine = $request_data['pagine'];
+        $lingua = $request_data['lingua'];
+        $prezzo = $request_data['prezzo'];
+        $idCasaEditrice = $request_data['idCasaEditrice'];
+        $idAutore = $request_data['idAutore'];
+        $letto = $request_data['letto'];
+        $formatoCartaceo = $request_data['formatoCartaceo'];
+        $formatoEbook = $request_data['formatoEbook'];
+
+
+        $autoreRepository = new AutoreRepository();
+        $autore = $autoreRepository->findById($idAutore);
+
+        $casaEditriceRepository = new CasaEditriceRepository();
+        $casaEditrice = $casaEditriceRepository->findById($idCasaEditrice);
+
+        $volumeRepository = new VolumeRepository();
+
+        $volume = new Volume();
+        $volume->setTitolo($titolo);
+        $volume->setDescrizione($descrizione);
+        $volume->setGenere($genere);
+        $volume->setAnno($anno);
+        $volume->setPagine($pagine);
+        $volume->setLingua($lingua);
+        $volume->setPrezzo($prezzo);
+        $volume->setCasaEditrice($casaEditrice);
+        $volume->setAutore($autore);
+        $volume->setLetto($letto);
+        $volume->setFormatoCartaceo($formatoCartaceo);
+        $volume->setFormatoEbook($formatoEbook);
+
+        $volumeRepository->save($volume);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(500);

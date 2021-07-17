@@ -246,6 +246,10 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                                     <?php if ($action === "edit") { ?>
                                                         <button id="salva" name="salva" type="submit" class="btn btn-default btn-primary">Modifica</button>
                                                     <?php } ?>
+
+                                                    <?php if ($action === "new") { ?>
+                                                        <button id="create" name="create" type="submit" class="btn btn-default btn-primary">Salva</button>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -276,9 +280,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         $('#salva').click(function(e) {
             e.preventDefault();
 
-            $("#esito").removeClass("alert-danger");
-            $("#esito").removeClass("alert-success");
-            $("#esito").removeClass("alert-warning");
+            $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
 
             var id = $("#id").val();
             var titolo = $("#titolo").val();
@@ -296,8 +298,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
             // Controllo campi obbligatori
             if (!titolo || !descrizione || !idCasaEditrice || !idAutore) {
-                $("#esito").removeClass("alert-success");
-                $("#esito").removeClass("alert-warning");
+                $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
 
                 $("#esito").addClass("alert-danger");
                 $("#esito").html("I campi 'Titolo', 'Descrizione', 'Casa Editrice' e 'Autore' sono obbligatori");
@@ -326,17 +328,16 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass("alert-danger");
-                    $("#esito").removeClass("alert-warning");
+                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
 
                     $("#esito").addClass("alert-success");
                     var html = "Modifica avvenuta con successo";
                     $("#esito").html(html);
                     $("#esito").show();
                 }).fail(function(msg) {
-                    $("#esito").removeClass("alert-success");
-                    $("#esito").removeClass("alert-warning");
-                    $("#esito").removeClass("alert-danger");
+                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
 
                     if (msg.status === 200) {
                         $("#esito").addClass("alert-success");
@@ -346,6 +347,79 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     } else {
                         $("#esito").addClass("alert-danger");
                         $("#esito").html("Errore durante l'operazione di modifica");
+                        $("#esito").show();
+                    }
+
+                });
+            }
+        });
+
+        $('#create').click(function(e) {
+            e.preventDefault();
+
+            $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
+            var titolo = $("#titolo").val();
+            var descrizione = $("#descrizione").val();
+            var genere = $("#genere").val();
+            var anno = $("#anno").val();
+            var pagine = $("#pagine").val();
+            var lingua = $("#lingua").val();
+            var prezzo = $("#prezzo").val();
+            var idCasaEditrice = $("#idCasaEditrice").val();
+            var idAutore = $("#idAutore").val();
+            var letto = ($("#letto").prop('checked')) ? true : false;
+            var formatoCartaceo = ($("#formatoCartaceo").prop('checked')) ? true : false;
+            var formatoEbook = ($("#formatoEbook").prop('checked')) ? true : false;
+
+            // Controllo campi obbligatori
+            if (!titolo || !descrizione || !idCasaEditrice || !idAutore) {
+                $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
+                $("#esito").addClass("alert-danger");
+                $("#esito").html("I campi 'Titolo', 'Descrizione', 'Casa Editrice' e 'Autore' sono obbligatori");
+                $("#esito").show();
+
+            } else {
+
+                let data = {
+                    "titolo": titolo,
+                    "descrizione": descrizione,
+                    "genere": genere,
+                    "anno": anno,
+                    "pagine": pagine,
+                    "lingua": lingua,
+                    "prezzo": prezzo,
+                    "idCasaEditrice": idCasaEditrice,
+                    "idAutore": idAutore,
+                    "letto": letto,
+                    "formatoCartaceo": formatoCartaceo,
+                    "formatoEbook": formatoEbook
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: "./public/volume",
+                    contentType: 'application/json',
+                    data: JSON.stringify(data), // access in body
+                }).done(function() {
+                    $("#esito").removeClass(["alert-danger", "alert-warning"]);
+
+                    $("#esito").addClass("alert-success");
+                    var html = "Inserimento avvenuto con successo";
+                    $("#esito").html(html);
+                    $("#esito").show();
+                }).fail(function(msg) {
+                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
+                    if (msg.status === 200) {
+                        $("#esito").addClass("alert-success");
+                        var html = "Inserimento avvenuto con successo";
+                        $("#esito").html(html);
+                        $("#esito").show();
+                    } else {
+                        $("#esito").addClass("alert-danger");
+                        $("#esito").html("Errore durante l'operazione di inserimento '" + msg.responseText + "'");
                         $("#esito").show();
                     }
 
@@ -393,21 +467,26 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
             $('#esito').hide();
 
-            $("#tabella_volumi tbody").html("");
-            $.getJSON(
-                "./public/volume/" + <?php echo $id ?>,
-                function(data) {
-                    showElements(data);
-                    popolaCasaEditrici(data.casa_editrice.id);
-                    popolaAutore(data.autore.id);
+            popolaCasaEditrici();
+            popolaAutore();
 
-                }
-            ).fail(function() {
-                bootbox.alert({
-                    message: "Nessun volume trovato per l'idenitificativo specificato ",
-                    size: 'small'
-                });
-            })
+            $("#tabella_volumi tbody").html("");
+            <?php if ($id) { ?>
+                $.getJSON(
+                    "./public/volume/" + <?php echo $id ?>,
+                    function(data) {
+                        showElements(data);
+                        popolaCasaEditrici(data.casa_editrice.id);
+                        popolaAutore(data.autore.id);
+
+                    }
+                ).fail(function() {
+                    bootbox.alert({
+                        message: "Nessun volume trovato per l'idenitificativo specificato ",
+                        size: 'small'
+                    });
+                })
+            <?php } ?>
         }
 
         function elimina(id) {
@@ -424,8 +503,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                         window.location.href = "volumi.php";
                                     });
                                 } else if (data.status === 404) {
-                                    $('#esito').removeClass('alert-danger');
-                                    $('#esito').removeClass('alert-success');
+                                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+
                                     $('#esito').addClass('alert alert-danger');
                                     $('#esito').html("Errore durante la cancellazione del volume");
                                     $('#esito').show();
