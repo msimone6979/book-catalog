@@ -26,3 +26,7 @@
 #tabella_volumi td {
   vertical-align: middle;
 }
+
+#tabella_casa_editrici tbody tr {
+  cursor: pointer;
+}
