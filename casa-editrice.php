@@ -49,6 +49,9 @@ session_start();
                         <div class="x_title">
                            <h2>Elenco delle case editrici</h2>
                            <ul class="nav navbar-right panel_toolbox">
+                              <li>
+                                 <button id="newCasaEditrice" type="button" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> Nuovo</button>
+                              </li>
                               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                               <li class="dropdown">
                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -62,10 +65,13 @@ session_start();
                            <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                           Totale: <span id="totalReturned"></span>
+                           <div class="total-container"> Totale: <span id="totalReturned"></span></div>
 
-                           <div class="col-md-7 col-md-push-3">
-                              <div id="esito"></div>
+                           <!-- ESITO  -->
+                           <div class="clearfix"></div>
+                           <div class="mt50"></div>
+                           <div class="col-xs-12">
+                              <div id="esito" class="alert alert-danger"></div>
                            </div>
 
                            <table id="tabella_casa_editrici" class="table table-hover table-striped">
@@ -99,25 +105,28 @@ session_start();
    <?php include_once 'inc/inc.script.php'; ?>
 
    <script type="text/javascript">
+      $("#newCasaEditrice").click(function() {
+         window.location.href = "casa-editrice-item.php?action=new";
+      });
+
+      function showElements(data) {
+
+         var tblRow = "<tr onclick='viewPage(" + data.id + ")'>" +
+            "<td>" + data.denominazione + "</td>" +
+            "<td>" + data.nazione + "</td>" +
+            "<td>" + data.url + "</td>" +
+
+
+            "<td><a href='./casa-editrice-item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
+            "<a href='./casa-editrice-item.php?action=edit&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
+            "<a onclick='javascript:elimina(" + data.id + ")' type='button' class='btn btn-danger btn-sm mr-10'><i class='fa fa-trash' aria-hidden='true'></i> </a>" +
+            "</td>" +
+            "</tr>";
+         $(tblRow).appendTo("#tabella_casa_editrici tbody");
+      }
+
       function init() {
-
-
-         function showElements(data) {
-
-            var tblRow = "<tr>" +
-               "<td>" + data.denominazione + "</td>" +
-               "<td>" + data.nazione + "</td>" +
-               "<td>" + data.url + "</td>" +
-
-
-               "<td><a href='./password_item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
-               "<a href='./password_item.php?action=edit&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
-               "<a href='javascript:elimina(" + data.id + ")' type='button' class='btn btn-danger btn-sm mr-10'><i class='fa fa-trash' aria-hidden='true'></i> </a>" +
-               "</td>" +
-               "</tr>";
-            $(tblRow).appendTo("#tabella_casa_editrici tbody");
-         }
-
+         $('#esito').hide();
          $("#tabella_casa_editrici tbody").html("");
          $.getJSON(
             "./public/casa-editrice/list",
@@ -128,10 +137,45 @@ session_start();
                });
             }
          );
-
       }
 
+      function elimina(id) {
+         event.stopPropagation();
+         if (id) {
+            bootbox.confirm("Sei sicuro di voler cancellare la casa editrice selezionata ?", function(result) {
+               if (result == true) {
 
+                  var jqxhr = $.ajax({
+                     url: "./public/casa-editrice/" + id,
+                     type: 'DELETE',
+                     contentType: "application/json",
+                     error: function(data) {
+                        $("#esito").removeClass("alert-success", "alert-danger", "alert-warning");
+
+                        if (data.status === 200) {
+                           bootbox.alert(
+                              "Cancellazione avvenuta con successo",
+                              function() {
+                                 init();
+                              });
+                        } else {
+
+                           bootbox.alert({
+                              title: "<i class='fa fa-exclamation'></i> Errore durante la cancellazione",
+                              message: data.responseText,
+                              className: 'animate__animated animate__rubberBand'
+                           });
+                        }
+                     }
+                  });
+               }
+            });
+         }
+      }
+
+      function viewPage(id) {
+         window.location = "./casa-editrice-item.php?action=view&id=" + id;
+      }
 
       $(function() {
          init();

@@ -470,7 +470,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             popolaCasaEditrici();
             popolaAutore();
 
-            $("#tabella_volumi tbody").html("");
             <?php if ($id) { ?>
                 $.getJSON(
                     "./public/volume/" + <?php echo $id ?>,

@@ -230,6 +230,114 @@ $app->get('/casa-editrice/list', function (Request $request, Response $response,
         ->withStatus(201);
 });
 
+$app->get('/casa-editrice/{id}', function (Request $request, Response $response, $args) {
+
+    $id = $args['id'];
+
+    $casaEditriceRepository = new CasaEditriceRepository();
+    $casaEditrice = $casaEditriceRepository->findById($id);
+
+    if ($casaEditrice) {
+        $serializer = JMS\Serializer\SerializerBuilder::create()->build();
+        $payload = $serializer->serialize($casaEditrice, 'json');
+
+        $response->getBody()->write($payload, JSON_PRETTY_PRINT);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } else {
+        $response->getBody()->write("{'error':'Nessuna casa editrice trovata per l'id specificato'}");
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(404);
+    }
+});
+
+$app->addBodyParsingMiddleware();
+$app->put('/casa-editrice/{id}', function (Request $request, Response $response, $args) {
+
+    try {
+        $id = $args['id'];
+
+        $request_data = $request->getParsedBody();
+        $denominazione = $request_data['denominazione'];
+        $nazione = $request_data['nazione'];
+        $url = $request_data['url'];
+
+
+        $casaEditriceRepository = new CasaEditriceRepository();
+        $casaEditrice = $casaEditriceRepository->findById($id);
+
+        $casaEditrice->setDenominazione($denominazione);
+        $casaEditrice->setNazione($nazione);
+        $casaEditrice->setUrl($url);
+
+        $casaEditriceRepository->update($casaEditrice);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } catch (Exception $exception) {
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+$app->addBodyParsingMiddleware();
+$app->post('/casa-editrice', function (Request $request, Response $response) {
+
+    try {
+
+        $request_data = $request->getParsedBody();
+        $denominazione = $request_data['denominazione'];
+        $nazione = $request_data['nazione'];
+        $url = $request_data['url'];
+
+        $casaEditrice = new CasaEditrice();
+        $casaEditrice->setDenominazione($denominazione);
+        $casaEditrice->setNazione($nazione);
+        $casaEditrice->setUrl($url);
+
+        $casaEditriceRepository = new CasaEditriceRepository();
+        $casaEditriceRepository->save($casaEditrice);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+$app->delete('/casa-editrice/{id}', function (Request $request, Response $response, $args) {
+
+    try {
+        $id = $args['id'];
+
+        $casaEditriceRepository = new CasaEditriceRepository();
+        $casaEditrice = $casaEditriceRepository->findById($id);
+
+        if ($casaEditrice) {
+            $casaEditriceRepository->delete($casaEditrice);
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $response->getBody()->write('{"error":"Nessuna casa editrice trovata per l\'id specificato"}');
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
 /***
  * AUTORE
  */
