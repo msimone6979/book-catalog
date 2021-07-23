@@ -1,14 +1,23 @@
 # book-catalog
 
-Application for managing the information of a catalog of books
+## Application for managing the information of a catalog of books
 
 Doctrine command line:
 
-Update schema
+## Update schema
+
+```
 php vendor/bin/doctrine orm:schema-tool:update --force
+```
 
-Unit Tests:
+## Unit Tests:
+
+```
 ./vendor/bin/phpunit --colors tests
+```
 
-Test coverage
+## Test coverage
+
+```
 ./vendor/bin/phpunit --coverage-text tests
+```
