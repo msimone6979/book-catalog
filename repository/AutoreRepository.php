@@ -19,13 +19,67 @@ class AutoreRepository
     {
         $query = $this->em->createQuery(
             'SELECT a
-            FROM entities\Autore a'
+            FROM entities\Autore a
+            ORDER BY a.cognome, a.nome ASC'
         );
+
         return $query->getArrayResult();
     }
 
     function findById($id)
     {
         return $this->em->getRepository('entities\Autore')->findOneBy(array('id' => $id));
+    }
+
+    function save(Autore $autore)
+    {
+        try {
+            $this->em->persist($autore);
+            $this->em->flush();
+        } catch (Exception $e) {
+            $previous = $e->getPrevious();
+            $errorCode = $previous->getCode();
+
+            if ($errorCode == 23000) {
+                throw new Exception("Esiste gi&agrave; un autore con il nome e cognome specificato");
+            }
+        }
+    }
+
+    function update(Autore $autore)
+    {
+        try {
+            $v = $this->em->getRepository('entities\Autore')->find($autore->getId());
+            $v->setNome($autore->getNome());
+            $v->setCognome($autore->getCognome());
+            $v->setNazionalita($autore->getNazionalita());
+            $v->setNote($autore->getNote());
+
+            $this->em->flush();
+        } catch (Exception $e) {
+            $previous = $e->getPrevious();
+            $errorCode = $previous->getCode();
+
+            if ($errorCode == '23000') {
+                throw new Exception("Esiste gi&agrave; un autore con il nome e cognome specificato");
+            }
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    function delete(Autore $autore)
+    {
+        try {
+            $this->em->remove($autore);
+            $this->em->flush();
+        } catch (Exception $e) {
+            $previous = $e->getPrevious();
+            $errorCode = $previous->getCode();
+
+            if ($errorCode == 23000) {
+                throw new Exception("Impossibile cancellare l'autore selezionato, eliminare prima i volumi ad esso associati");
+            }
+            throw new Exception($e->getMessage());
+        }
     }
 }

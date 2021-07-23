@@ -2,6 +2,8 @@
 
 use entities\CasaEditrice;
 use entities\Volume;
+use entities\Autore;
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -353,5 +355,118 @@ $app->get('/autore/list', function (Request $request, Response $response, $args)
         ->withStatus(201);
 });
 
+$app->get('/autore/{id}', function (Request $request, Response $response, $args) {
+
+    $id = $args['id'];
+
+    $autoreRepository = new AutoreRepository();
+    $autore = $autoreRepository->findById($id);
+
+    if ($autore) {
+        $serializer = JMS\Serializer\SerializerBuilder::create()->build();
+        $payload = $serializer->serialize($autore, 'json');
+
+        $response->getBody()->write($payload, JSON_PRETTY_PRINT);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } else {
+        $response->getBody()->write("{'error':'Nessun autore trovato per l'id specificato'}");
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(404);
+    }
+});
+
+$app->addBodyParsingMiddleware();
+$app->put('/autore/{id}', function (Request $request, Response $response, $args) {
+
+    try {
+        $id = $args['id'];
+
+        $request_data = $request->getParsedBody();
+        $nome = $request_data['nome'];
+        $cognome = $request_data['cognome'];
+        $note = $request_data['note'];
+        $nazionalita = $request_data['nazionalita'];
+
+        $autoreRepository = new AutoreRepository();
+        $autore = $autoreRepository->findById($id);
+
+        $autore->setNome($nome);
+        $autore->setCognome($cognome);
+        $autore->setNote($note);
+        $autore->setNazionalita($nazionalita);
+
+        $autoreRepository->update($autore);
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+$app->addBodyParsingMiddleware();
+$app->post('/autore', function (Request $request, Response $response) {
+
+    try {
+
+        $request_data = $request->getParsedBody();
+        $nome = $request_data['nome'];
+        $cognome = $request_data['cognome'];
+        $note = $request_data['note'];
+        $nazionalita = $request_data['nazionalita'];
+
+        $autore = new Autore();
+        $autore->setNome($nome);
+        $autore->setCognome($cognome);
+        $autore->setNote($note);
+        $autore->setNazionalita($nazionalita);
+
+        $autoreRepository = new AutoreRepository();
+        $autoreRepository->save($autore);
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(201);
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+$app->delete('/autore/{id}', function (Request $request, Response $response, $args) {
+
+    try {
+        $id = $args['id'];
+
+        $autoreRepository = new AutoreRepository();
+        $autore = $autoreRepository->findById($id);
+
+        if ($autore) {
+            $autoreRepository->delete($autore);
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $response->getBody()->write('{"error":"Nessun autore trovato per l\'id specificato"}');
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
 
 $app->run();

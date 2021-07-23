@@ -30,3 +30,15 @@
 #tabella_casa_editrici tbody tr {
   cursor: pointer;
 }
+
+#tabella_autori tbody tr {
+  cursor: pointer;
+}
+
+#sidebar-menu {
+  margin-top: 20px;
+}
+
+.profile {
+  margin-top: 15px;
+}

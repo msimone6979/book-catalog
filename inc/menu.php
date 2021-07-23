@@ -20,13 +20,13 @@
             <h3>Generale</h3>
             <ul class="nav side-menu">
                <li>
-                  <a href="volumi.php"><i class="fa fa-book"></i>Volumi</a>
-               </li>
-               <li>
                   <a href="autori.php"><i class="fa fa-user"></i> Autori</a>
                </li>
                <li>
                   <a href="casa-editrice.php"><i class="fa fa-building"></i> Casa Editrice </a>
+               </li>
+               <li>
+                  <a href="volumi.php"><i class="fa fa-book"></i>Volumi</a>
                </li>
             </ul>
          </div>

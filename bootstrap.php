@@ -19,3 +19,5 @@ $connection_parameters = [
 
 // Get the entity manager
 $entity_manager = Doctrine\ORM\EntityManager::create($connection_parameters, $configuration);
+$conn = $entity_manager->getConnection();
+$conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');

@@ -36,7 +36,7 @@ class VolumeRepository
         $query = $this->em->createQuery($dql);
         $utenti = $query->getResult();
 
-        return $this->em->getRepository('entities\Volume')->findBy(array('autore' => $autori));
+        return $this->em->getRepository('entities\Volume')->findBy(array('autore' => $autori), array('titolo' => 'ASC'));
     }
 
     function findById($id)

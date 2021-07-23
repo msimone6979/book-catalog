@@ -21,7 +21,8 @@ class CasaEditriceRepository
     {
         $query = $this->em->createQuery(
             'SELECT c
-            FROM entities\CasaEditrice c'
+            FROM entities\CasaEditrice c
+            ORDER BY c.denominazione ASC'
         );
         return $query->getArrayResult();
     }
