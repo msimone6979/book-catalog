@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+
 
 require_once __DIR__ . '/../entities/Volume.php';
 
@@ -15,7 +17,10 @@ use entities\Volume;
 
 /**
  * @Entity
- * @Table(name="autore")
+ * @Table(name="autore",uniqueConstraints={
+ *        @UniqueConstraint(name="name_unique", 
+ *            columns={"nome", "cognome"})
+ *    })
  */
 class Autore
 {
@@ -32,12 +37,12 @@ class Autore
     private $volume;
 
     /**
-     * @Column(type="string")
+     * @Column(name="nome", type="string")
      */
     private $nome;
 
     /**
-     * @Column(type="string")
+     * @Column(name="cognome", type="string")
      */
     private $cognome;
 

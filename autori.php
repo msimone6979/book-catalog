@@ -49,6 +49,9 @@ session_start();
                         <div class="x_title">
                            <h2>Elenco autori</h2>
                            <ul class="nav navbar-right panel_toolbox">
+                              <li>
+                                 <button id="newAutore" type="button" class="btn btn-round btn-primary"><i class="fa fa-plus"></i> Nuovo</button>
+                              </li>
                               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                               <li class="dropdown">
                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -66,14 +69,14 @@ session_start();
                            <table id="tabella_autori" class="table table-hover table-striped">
                               <thead>
                                  <tr>
-                                    <th style="white-space: nowrap">Nome
-                                       <a href="#" onclick='searchElem("nome","asc")'>
+                                    <th style="white-space: nowrap">Cognome
+                                       <a href="#" onclick='searchElem("cognome","asc")'>
                                           <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                       </a><a style="float:righ" href="#" onclick='searchElem("nome","desc")'>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("cognome","desc")'>
                                           <i class="fa fa-arrow-up" aria-hidden="true"></i>
                                        </a>
                                     </th>
-                                    <th>Cognome</th>
+                                    <th>Nome</th>
                                     <th>Nazionalità</th>
                                     <th>Azioni</th>
                                  </tr>
@@ -94,25 +97,64 @@ session_start();
    <?php include_once 'inc/inc.script.php'; ?>
 
    <script type="text/javascript">
-      function init() {
+      $("#newAutore").click(function() {
+         window.location.href = "autori-item.php?action=new";
+      });
 
+      function showElements(data) {
 
-         function showElements(data) {
+         var tblRow = "<tr onclick='viewPage(" + data.id + ")'>" +
+            "<td>" + data.cognome + "</td>" +
+            "<td>" + data.nome + "</td>" +
+            "<td>" + data.nazionalita + "</td>" +
 
-            var tblRow = "<tr>" +
-               "<td>" + data.nome + "</td>" +
-               "<td>" + data.cognome + "</td>" +
-               "<td>" + data.nazionalita + "</td>" +
+            "<td><a href='./autori-item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
+            "<a href='./autori-item.php?action=edit&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
+            "<a onclick='javascript:elimina(" + data.id + ")' type='button' class='btn btn-danger btn-sm mr-10'><i class='fa fa-trash' aria-hidden='true'></i> </a>" +
+            "</td>" +
+            "</tr>";
+         $(tblRow).appendTo("#tabella_autori tbody");
+      }
 
+      function elimina(id) {
+         event.stopPropagation();
+         if (id) {
+            bootbox.confirm("Sei sicuro di voler cancellare l'autore selezionato ?", function(result) {
+               if (result == true) {
 
-               "<td><a href='./password_item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
-               "<a href='./password_item.php?action=edit&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
-               "<a href='javascript:elimina(" + data.id + ")' type='button' class='btn btn-danger btn-sm mr-10'><i class='fa fa-trash' aria-hidden='true'></i> </a>" +
-               "</td>" +
-               "</tr>";
-            $(tblRow).appendTo("#tabella_autori tbody");
+                  var jqxhr = $.ajax({
+                     url: "./public/autore/" + id,
+                     type: 'DELETE',
+                     contentType: "application/json",
+                     error: function(data) {
+                        $("#esito").removeClass("alert-success", "alert-danger", "alert-warning");
+
+                        if (data.status === 200) {
+                           bootbox.alert(
+                              "Cancellazione avvenuta con successo",
+                              function() {
+                                 init();
+                              });
+                        } else {
+
+                           bootbox.alert({
+                              title: "<i class='fa fa-exclamation'></i> Errore durante la cancellazione",
+                              message: data.responseText,
+                              className: 'animate__animated animate__rubberBand'
+                           });
+                        }
+                     }
+                  });
+               }
+            });
          }
+      }
 
+      function viewPage(id) {
+         window.location = "./autori-item.php?action=view&id=" + id;
+      }
+
+      function init() {
          $("#tabella_autori tbody").html("");
          $.getJSON(
             "./public/autore/list",

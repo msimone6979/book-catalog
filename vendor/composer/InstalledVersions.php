@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '2c73f6443c344e72d500df2b1c4c73a4c4805efb',
+    'reference' => '9177135c104b04db07f3912d5840bcc7511411a7',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '2c73f6443c344e72d500df2b1c4c73a4c4805efb',
+      'reference' => '9177135c104b04db07f3912d5840bcc7511411a7',
     ),
     'composer/package-versions-deprecated' => 
     array (
@@ -63,12 +63,12 @@ private static $installed = array (
     ),
     'doctrine/cache' => 
     array (
-      'pretty_version' => '2.1.0',
-      'version' => '2.1.0.0',
+      'pretty_version' => '2.1.1',
+      'version' => '2.1.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ac77408b22cc6c4d0b4947d20a3889be3043566e',
+      'reference' => '331b4d5dbaeab3827976273e9356b3b453c300ce',
     ),
     'doctrine/collections' => 
     array (
@@ -189,12 +189,12 @@ private static $installed = array (
     ),
     'http-interop/http-factory-guzzle' => 
     array (
-      'pretty_version' => '1.0.0',
-      'version' => '1.0.0.0',
+      'pretty_version' => '1.2.0',
+      'version' => '1.2.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '34861658efb9899a6618cef03de46e2a52c80fc0',
+      'reference' => '8f06e92b95405216b237521cc64c804dd44c4a81',
     ),
     'jms/metadata' => 
     array (
@@ -256,12 +256,12 @@ private static $installed = array (
     ),
     'nikic/php-parser' => 
     array (
-      'pretty_version' => 'v4.11.0',
-      'version' => '4.11.0.0',
+      'pretty_version' => 'v4.12.0',
+      'version' => '4.12.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'fe14cf3672a149364fb66dfe11bf6549af899f94',
+      'reference' => '6608f01670c3cc5079e18c1dab1104e002579143',
     ),
     'nyholm/psr7' => 
     array (
@@ -290,12 +290,12 @@ private static $installed = array (
     ),
     'phar-io/manifest' => 
     array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => '2.0.3',
+      'version' => '2.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '85265efd3af7ba3ca4b2a2c34dbfc5788dd29133',
+      'reference' => '97803eca37d319dfa7826cc2437fc020857acb53',
     ),
     'phar-io/version' => 
     array (
@@ -407,12 +407,12 @@ private static $installed = array (
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '9.5.6',
-      'version' => '9.5.6.0',
+      'pretty_version' => '9.5.7',
+      'version' => '9.5.7.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'fb9b8333f14e3dce976a60ef6a7e05c7c7ed8bfb',
+      'reference' => 'd0dc8b6999c937616df4fb046792004b33fd31c5',
     ),
     'psr/cache' => 
     array (
@@ -452,8 +452,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '^1.0',
-        1 => '1.0',
+        0 => '1.0',
+        1 => '^1.0',
       ),
     ),
     'psr/http-message' => 
