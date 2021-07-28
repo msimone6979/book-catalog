@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once 'inc/inc.func.php';
+
+isUserAuthenticated();
 ?>
 <!DOCTYPE html>
 <html lang="it">
