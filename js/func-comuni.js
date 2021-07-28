@@ -32,3 +32,19 @@
     });
   });
 }
+
+/**
+ * getImagePath
+ */
+function getImagePath(img, imgUrlBase) {
+  var imageUrl = "https://via.placeholder.com/150";
+
+  if (img) {
+     if (img.indexOf("http://") == 0 || img.indexOf("https://") == 0) {
+        imageUrl = img
+     } else {
+        imageUrl = imgUrlBase + "copertine/" + img;
+     }
+  }
+  return imageUrl;
+}

@@ -12,6 +12,7 @@
     "animate.css": "^4.1.1",
     "bootbox": "^5.5.2",
     "bootstrap": "^5.0.2",
+    "bootstrap-fileinput": "^5.2.3",
     "gentelella": "^1.4.0",
     "jquery": "^3.6.0"
   },

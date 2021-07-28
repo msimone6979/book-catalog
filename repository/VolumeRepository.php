@@ -61,6 +61,7 @@ class VolumeRepository
         $v->setPagine($volume->getPagine());
         $v->setLingua($volume->getLingua());
         $v->setPrezzo($volume->getPrezzo());
+        $v->setImmagine($volume->getImmagine());
         $v->setCasaEditrice($volume->getCasaEditrice());
         $v->setAutore($volume->getAutore());
         $v->setLetto($volume->getLetto());

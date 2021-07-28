@@ -31,6 +31,8 @@ if (MODE == "LOCAL"){
 	$db_port="3306";
 }
 
+define("WEB_ROOT","http://".$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"]);
+
 // Percorso filesystem - upload file
 define("IMG_PATH_ROOT",$documentRoot."/upload");
 
@@ -44,5 +46,3 @@ define ("DATABASE_PWD","$db_password");
 
 /** FILE **/
 define("MAX_FILE_MB",3); /* MAX UPLOAD FILE SIZE  */
-
-?>

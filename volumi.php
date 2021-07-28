@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once 'inc/inc.conf.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,10 +119,15 @@ session_start();
          window.location.href = "volumi_item.php?action=new";
       });
 
+      var imgUrlBase = '<?php echo IMG_URL_BASE ?>';
+
       function showElements(data) {
 
+
+         var imageUrl = getImagePath(data.immagine, imgUrlBase);
+
          var tblRow = "<tr onclick='viewPage(" + data.id + ")'>" +
-            "<td><img class='immagine-small' src='" + data.immagine + "'></td> " +
+            "<td> <img class='immagine-small' src='" + imageUrl + "'> </td> " +
             "<td> " + data.titolo + "</td>" +
             "<td>" + data.autore.cognome + ' ' + data.autore.nome + "</td>" +
             "<td>" + data.casa_editrice.denominazione + "</td>" +
