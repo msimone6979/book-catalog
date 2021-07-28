@@ -1,10 +1,12 @@
 <?php
 session_start();
+require_once 'inc/inc.func.php';
+include_once 'inc/inc.conf.php';
+isUserAuthenticated();
 
 $action = (isset($_GET["action"])) ? $_GET["action"] : "";
 $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
-include_once 'inc/inc.conf.php';
 ?>
 <!DOCTYPE html>
 <html lang="it">

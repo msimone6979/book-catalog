@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once 'inc/inc.func.php';
+
+isUserAuthenticated();
 
 $action = (isset($_GET["action"])) ? $_GET["action"] : "";
 $id = (isset($_GET["id"])) ? $_GET["id"] : "";

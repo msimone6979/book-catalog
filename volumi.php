@@ -1,6 +1,9 @@
 <?php
 session_start();
+require_once 'inc/inc.func.php';
 include_once 'inc/inc.conf.php';
+
+isUserAuthenticated();
 ?>
 <!DOCTYPE html>
 <html lang="en">

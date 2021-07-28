@@ -1,14 +1,14 @@
-<?php 
+<?php
 
-$error=FALSE;
-$success=FALSE;
-$warning=FALSE;
+$error = FALSE;
+$success = FALSE;
+$warning = FALSE;
 
-if(isset($_GET['e']) && preg_match("/^[0-9]{1}$/",$_GET['e'])) {
-	if ($_GET['e']==1) $error="Username o password non corrette.<br>";
-	elseif ($_GET['e']==2) $error="&Egrave; necessario effettuare la login per accedere al contenuto.<br>";
-	elseif ($_GET['e']==3) $error="Errore critico, contattare l'amministratore.<br>";
-	elseif ($_GET['e']==4) $success="Log out effettuato con successo.<br>";
+if (isset($_GET['e']) && preg_match("/^[0-9]{1}$/", $_GET['e'])) {
+    if ($_GET['e'] == 1) $error = "Username o password non corrette.<br>";
+    elseif ($_GET['e'] == 2) $warning = "&Egrave; necessario effettuare la login per accedere al contenuto.<br>";
+    elseif ($_GET['e'] == 3) $error = "Errore critico, contattare l'amministratore.<br>";
+    elseif ($_GET['e'] == 4) $success = "Log out effettuato con successo.<br>";
 }
 ?>
 <!DOCTYPE html>
@@ -52,12 +52,12 @@ if(isset($_GET['e']) && preg_match("/^[0-9]{1}$/",$_GET['e'])) {
                             <button type="submit" class="btn btn-default submit">Log in</button>
                         </div>
                     </form>
-                    <?php                
-                        if($error!==FALSE) echo "<p>&nbsp;</p><p class='alert alert-danger'>$error</p>";	
-                        if($warning!==FALSE) echo "<p>&nbsp;</p><p class='alert alert-warning'>$warning</p>";
-                        if($success!==FALSE) echo "<p>&nbsp;</p><p class='alert alert-success'>$success</p>";	
-                       
-					?>
+                    <?php
+                    if ($error !== FALSE) echo "<p>&nbsp;</p><p class='alert alert-danger'>$error</p>";
+                    if ($warning !== FALSE) echo "<p>&nbsp;</p><p class='alert alert-warning'>$warning</p>";
+                    if ($success !== FALSE) echo "<p>&nbsp;</p><p class='alert alert-success'>$success</p>";
+
+                    ?>
                 </section>
                 <div class="separator">
                     <p>©<?php echo date('Y') ?> All Rights Reserved. Matteo Simone</p>
