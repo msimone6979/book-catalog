@@ -3,8 +3,8 @@
 Thumbs.bd
 
 # Dependencies
-node_modules/
-vendor/
+node_modules/*
+vendor/*
 
 /docs/sql/*
 
@@ -18,3 +18,6 @@ vendor/
 
 # Local History for Visual Studio Code
 .history/
+
+# Images
+/upload/copertine/*

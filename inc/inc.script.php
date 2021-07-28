@@ -26,3 +26,6 @@
 <script src="./node_modules/gentelella/build/js/custom.js"></script>
 <!-- Bootstrap Dialog -->
 <script src="./node_modules/bootbox/bootbox.js"></script>
+
+<!-- Func Comuni -->
+<script src="./js/func-comuni.js"></script>

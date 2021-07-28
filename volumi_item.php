@@ -4,6 +4,7 @@ session_start();
 $action = (isset($_GET["action"])) ? $_GET["action"] : "";
 $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
+include_once 'inc/inc.conf.php';
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -19,6 +20,11 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
     <!-- Toggle button -->
     <link href="./css/bootstrap-toggle.min.css" rel="stylesheet">
+
+    <!-- File Input -->
+
+    <link href="./node_modules/bootstrap-fileinput/css/fileinput.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
 
 </head>
 
@@ -70,7 +76,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                 </div>
                                 <div class="x_content">
 
-                                    <form method="post" class="form-horizontal">
+
+                                    <form action="#" id="form" method="post" class="form-horizontal" enctype="multipart/form-data">
                                         <input type="hidden" id="action" name="action" value="<?php echo $action; ?> ">
                                         <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
 
@@ -78,16 +85,23 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                         <div class="col-md-6 col-xs-12">
 
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Immagine </span></label>
-                                                <div class="col-md-7">
-                                                    <?php if ($action == "view") { ?>
-                                                        <img src="https://via.placeholder.com/150">
 
-                                                    <?php } else { ?>
-                                                        <img src="https://via.placeholder.com/150">
-                                                    <?php } ?>
-                                                </div>
+                                                <?php
+                                                if ($action == "view") { ?>
+                                                    <div class="file-loading">
+                                                        <label class="col-md-3 control-label">Immagine</label>
+                                                        <div class="col-md-7">
+                                                            <img id="immagine" name="immagine" class="immagine-small">
+                                                        </div>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="file-loading">
+                                                        <input id="immagine" name="immagine" type="file">
+                                                    </div>
+                                                <?php } ?>
+
                                             </div>
+                                            <!-- /.fileupload -->
 
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Titolo <span class="text-danger">*</span></label>
@@ -253,7 +267,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                                 </div>
                                             </div>
                                         </div>
-
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -270,6 +284,12 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
     <!-- Bootstrap Dialog -->
     <script src="./node_modules/bootbox/bootbox.js"></script>
 
+    <!-- File Input -->
+    <script src="./node_modules/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="./node_modules/bootstrap-fileinput/js/locales/it.js"></script>
+    <script src="./node_modules/bootstrap-fileinput/js/plugins/piexif.min.js" type="text/javascript"></script>
+
+
     <script src="js/func-comuni.js"></script>
 
     <script type="text/javascript">
@@ -280,7 +300,9 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         $('#salva').click(function(e) {
             e.preventDefault();
 
-            $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+            $("#esito").removeClass("alert-success");
+            $("#esito").removeClass("alert-danger");
+            $("#esito").removeClass("alert-warning");
 
             var id = $("#id").val();
             var titolo = $("#titolo").val();
@@ -290,6 +312,13 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             var pagine = $("#pagine").val();
             var lingua = $("#lingua").val();
             var prezzo = $("#prezzo").val();
+
+            var captionName = $.find(".file-caption-info");
+            var immagine = "";
+            if (captionName && captionName.length > 0) {
+                immagine = captionName[0].textContent;
+            }
+
             var idCasaEditrice = $("#idCasaEditrice").val();
             var idAutore = $("#idAutore").val();
             var letto = ($("#letto").prop('checked')) ? true : false;
@@ -298,7 +327,9 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
             // Controllo campi obbligatori
             if (!titolo || !descrizione || !idCasaEditrice || !idAutore) {
-                $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+                $("#esito").removeClass("alert-success");
+                $("#esito").removeClass("alert-danger");
+                $("#esito").removeClass("alert-warning");
 
 
                 $("#esito").addClass("alert-danger");
@@ -315,6 +346,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     "pagine": pagine,
                     "lingua": lingua,
                     "prezzo": prezzo,
+                    "immagine": immagine,
                     "idCasaEditrice": idCasaEditrice,
                     "idAutore": idAutore,
                     "letto": letto,
@@ -328,16 +360,18 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
-
+                    $("#esito").removeClass("alert-success");
+                    $("#esito").removeClass("alert-danger");
+                    $("#esito").removeClass("alert-warning");
 
                     $("#esito").addClass("alert-success");
                     var html = "Modifica avvenuta con successo";
                     $("#esito").html(html);
                     $("#esito").show();
                 }).fail(function(msg) {
-                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
-
+                    $("#esito").removeClass("alert-success");
+                    $("#esito").removeClass("alert-danger");
+                    $("#esito").removeClass("alert-warning");
 
                     if (msg.status === 200) {
                         $("#esito").addClass("alert-success");
@@ -357,7 +391,9 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         $('#create').click(function(e) {
             e.preventDefault();
 
-            $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+            $("#esito").removeClass("alert-success");
+            $("#esito").removeClass("alert-danger");
+            $("#esito").removeClass("alert-warning");
 
             var titolo = $("#titolo").val();
             var descrizione = $("#descrizione").val();
@@ -366,6 +402,10 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             var pagine = $("#pagine").val();
             var lingua = $("#lingua").val();
             var prezzo = $("#prezzo").val();
+
+            var captionName = $.find(".file-caption-info");
+            var immagine = captionName[0].textContent;
+
             var idCasaEditrice = $("#idCasaEditrice").val();
             var idAutore = $("#idAutore").val();
             var letto = ($("#letto").prop('checked')) ? true : false;
@@ -374,7 +414,9 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
             // Controllo campi obbligatori
             if (!titolo || !descrizione || !idCasaEditrice || !idAutore) {
-                $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+                $("#esito").removeClass("alert-success");
+                $("#esito").removeClass("alert-danger");
+                $("#esito").removeClass("alert-warning");
 
                 $("#esito").addClass("alert-danger");
                 $("#esito").html("I campi 'Titolo', 'Descrizione', 'Casa Editrice' e 'Autore' sono obbligatori");
@@ -390,6 +432,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     "pagine": pagine,
                     "lingua": lingua,
                     "prezzo": prezzo,
+                    "immagine": immagine,
                     "idCasaEditrice": idCasaEditrice,
                     "idAutore": idAutore,
                     "letto": letto,
@@ -403,14 +446,18 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass(["alert-danger", "alert-warning"]);
+                    $("#esito").removeClass("alert-success");
+                    $("#esito").removeClass("alert-danger");
+                    $("#esito").removeClass("alert-warning");
 
                     $("#esito").addClass("alert-success");
                     var html = "Inserimento avvenuto con successo";
                     $("#esito").html(html);
                     $("#esito").show();
                 }).fail(function(msg) {
-                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+                    $("#esito").removeClass("alert-success");
+                    $("#esito").removeClass("alert-danger");
+                    $("#esito").removeClass("alert-warning");
 
                     if (msg.status === 200) {
                         $("#esito").addClass("alert-success");
@@ -427,7 +474,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             }
         });
 
-        function showElements(data) {
+        function showElements(data, imgUrlBase) {
 
             $('#titolo').value = data.titolo;
             $('#titolo').html(data.titolo);
@@ -457,6 +504,9 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             $('#prezzo').html(data.prezzo);
             $('#prezzo').val(data.prezzo);
 
+            var imageUrl = getImagePath(data.immagine, imgUrlBase);
+            $('#immagine').attr('src', imageUrl);
+
             $("#letto").prop("checked", data.letto);
             $("#formatoEbook").prop("checked", data.formato_ebook);
             $("#formatoCartaceo").prop("checked", data.formato_cartaceo);
@@ -474,10 +524,11 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                 $.getJSON(
                     "./public/volume/" + <?php echo $id ?>,
                     function(data) {
-                        showElements(data);
+                        var imgUrlBase = '<?php echo IMG_URL_BASE ?>';
+                        showElements(data, imgUrlBase);
                         popolaCasaEditrici(data.casa_editrice.id);
                         popolaAutore(data.autore.id);
-
+                        initPreviewImage(data.immagine);
                     }
                 ).fail(function() {
                     bootbox.alert({
@@ -485,6 +536,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                         size: 'small'
                     });
                 })
+            <?php } else { ?>
+                initPreviewImage();
             <?php } ?>
         }
 
@@ -502,7 +555,9 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                         window.location.href = "volumi.php";
                                     });
                                 } else if (data.status === 404) {
-                                    $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
+                                    $("#esito").removeClass("alert-success");
+                                    $("#esito").removeClass("alert-danger");
+                                    $("#esito").removeClass("alert-warning");
 
                                     $('#esito').addClass('alert alert-danger');
                                     $('#esito').html("Errore durante la cancellazione del volume");
@@ -520,6 +575,44 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     callback: function() {
                         window.location.href = "volumi.php";
                     }
+                });
+            }
+        }
+
+        function initPreviewImage(image) {
+            if (image) {
+                var urlImage = '<?php echo IMG_URL_BASE ?>copertine/' + image
+                $("#immagine").fileinput({
+                    showUpload: true,
+                    previewFileType: 'any',
+                    initialPreviewAsData: true,
+                    maxFileCount: 1,
+                    language: 'it',
+                    uploadUrl: '<?php echo WEB_ROOT; ?>/upload-image.php',
+                    overwriteInitial: true,
+                    resizeImage: true,
+                    maxImageWidth: "80%",
+                    initialPreviewFileType: 'image',
+                    initialCaption: image,
+                    initialPreview: [urlImage],
+                    initialPreviewConfig: [{
+                        caption: image,
+                        downloadUrl: urlImage,
+                        width: "50px"
+                    }]
+                });
+            } else {
+                $("#immagine").fileinput({
+                    showUpload: true,
+                    previewFileType: 'any',
+                    initialPreviewAsData: true,
+                    maxFileCount: 1,
+                    language: 'it',
+                    uploadUrl: '<?php echo WEB_ROOT; ?>/upload-image.php',
+                    overwriteInitial: true,
+                    resizeImage: true,
+                    maxImageWidth: "80%"
+
                 });
             }
         }

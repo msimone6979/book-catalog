@@ -87,6 +87,7 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
         $pagine = $request_data['pagine'];
         $lingua = $request_data['lingua'];
         $prezzo = $request_data['prezzo'];
+        $immagine = $request_data['immagine'];
         $idCasaEditrice = $request_data['idCasaEditrice'];
         $idAutore = $request_data['idAutore'];
         $letto = $request_data['letto'];
@@ -109,6 +110,7 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
         $volume->setPagine($pagine);
         $volume->setLingua($lingua);
         $volume->setPrezzo($prezzo);
+        $volume->setImmagine($immagine);
         $volume->setCasaEditrice($casaEditrice);
         $volume->setAutore($autore);
         $volume->setLetto($letto);
@@ -141,6 +143,7 @@ $app->post('/volume', function (Request $request, Response $response) {
         $pagine = $request_data['pagine'];
         $lingua = $request_data['lingua'];
         $prezzo = $request_data['prezzo'];
+        $immagine = $request_data['immagine'];
         $idCasaEditrice = $request_data['idCasaEditrice'];
         $idAutore = $request_data['idAutore'];
         $letto = $request_data['letto'];
@@ -164,6 +167,7 @@ $app->post('/volume', function (Request $request, Response $response) {
         $volume->setPagine($pagine);
         $volume->setLingua($lingua);
         $volume->setPrezzo($prezzo);
+        $volume->setImmagine($immagine);
         $volume->setCasaEditrice($casaEditrice);
         $volume->setAutore($autore);
         $volume->setLetto($letto);
