@@ -112,6 +112,24 @@ isUserAuthenticated();
          window.location.href = "casa-editrice-item.php?action=new";
       });
 
+      // Ordinamento
+      function searchElem(ordField, sort) {
+
+         if (typeof(ordField) === 'undefined') ordField = "";
+         if (typeof(sort) === 'undefined') sort = "";
+
+         $("#tabella_casa_editrici tbody").html("");
+         $.getJSON(
+            "./public/casa-editrice/list/" + ordField + "/" + sort,
+            function(data) {
+               $("#totalReturned").html(data.length);
+               $.each(data, function(i, data) {
+                  showElements(data);
+               });
+            }
+         );
+      }
+
       function showElements(data) {
 
          var tblRow = "<tr onclick='viewPage(" + data.id + ")'>" +

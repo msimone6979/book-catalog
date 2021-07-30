@@ -224,10 +224,13 @@ $app->get('/utente/list', function (Request $request, Response $response, $args)
 /***
  * CASA-EDITRICE
  */
-$app->get('/casa-editrice/list', function (Request $request, Response $response, $args) {
+$app->get('/casa-editrice/list[/{orderFiel}[/{sort}]]', function (Request $request, Response $response, $args) {
+
+    $sort = ($args && $args['sort']) ? $args['sort'] : null;
+    $orderFiel = ($args && $args['orderFiel']) ? $args['orderFiel'] : null;
 
     $casaEditriceRepository = new CasaEditriceRepository();
-    $casaEditrice = $casaEditriceRepository->getList();
+    $casaEditrice = $casaEditriceRepository->getList($sort, $orderFiel);
 
     $payload = json_encode($casaEditrice);
     $response->getBody()->write($payload, JSON_PRETTY_PRINT);
