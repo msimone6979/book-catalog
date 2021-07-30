@@ -78,7 +78,13 @@ isUserAuthenticated();
                                           <i class="fa fa-arrow-up" aria-hidden="true"></i>
                                        </a>
                                     </th>
-                                    <th>Nome</th>
+                                    <th>Nome
+                                       <a href="#" onclick='searchElem("nome","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("nome","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
                                     <th>Nazionalità</th>
                                     <th>Azioni</th>
                                  </tr>
@@ -102,6 +108,25 @@ isUserAuthenticated();
       $("#newAutore").click(function() {
          window.location.href = "autori-item.php?action=new";
       });
+
+      // Ordinamento
+      function searchElem(ordField, sort) {
+
+         if (typeof(ordField) === 'undefined') ordField = "";
+         if (typeof(sort) === 'undefined') sort = "";
+
+         $("#tabella_autori tbody").html("");
+         $.getJSON(
+            "./public/autore/list/" + ordField + "/" + sort,
+            function(data) {
+               $("#totalReturned").html(data.length);
+               $.each(data, function(i, data) {
+                  showElements(data);
+               });
+            }
+         );
+
+      }
 
       function showElements(data) {
 

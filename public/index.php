@@ -347,10 +347,13 @@ $app->delete('/casa-editrice/{id}', function (Request $request, Response $respon
 /***
  * AUTORE
  */
-$app->get('/autore/list', function (Request $request, Response $response, $args) {
+$app->get('/autore/list[/{orderFiel}[/{sort}]]', function ($request, $response, array $args) {
+
+    $sort = ($args && $args['sort']) ? $args['sort'] : null;
+    $orderFiel = ($args && $args['orderFiel']) ? $args['orderFiel'] : null;
 
     $autoreRepository = new AutoreRepository();
-    $casaEditrice = $autoreRepository->getList();
+    $casaEditrice = $autoreRepository->getList($sort, $orderFiel);
 
     $payload = json_encode($casaEditrice);
     $response->getBody()->write($payload, JSON_PRETTY_PRINT);

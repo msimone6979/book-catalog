@@ -15,12 +15,15 @@ class AutoreRepository
         $this->em = $entity_manager;
     }
 
-    function getList()
+    function getList($sort, $orderField)
     {
+        $sort = ($sort) ?  $sort :  ' ASC ';
+        $orderField = ($orderField) ? 'a.' . $orderField : ' a.cognome, a.nome';
+
         $query = $this->em->createQuery(
             'SELECT a
             FROM entities\Autore a
-            ORDER BY a.cognome, a.nome ASC'
+            ORDER BY ' . $orderField . ' ' . $sort
         );
 
         return $query->getArrayResult();
