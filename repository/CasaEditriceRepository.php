@@ -17,12 +17,15 @@ class CasaEditriceRepository
         $this->em = $entity_manager;
     }
 
-    function getList()
+    function getList($sort, $orderField)
     {
+        $sort = ($sort) ?  $sort :  ' ASC ';
+        $orderField = ($orderField) ? 'c.' . $orderField : ' c.denominazione';
+
         $query = $this->em->createQuery(
             'SELECT c
             FROM entities\CasaEditrice c
-            ORDER BY c.denominazione ASC'
+            ORDER BY ' . $orderField . ' ' . $sort
         );
         return $query->getArrayResult();
     }
