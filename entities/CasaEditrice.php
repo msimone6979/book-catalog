@@ -20,22 +20,22 @@ class CasaEditrice
      * @GeneratedValue
      * @Column(type="smallint")
      */
-    private $id;
+    public $id;
 
     /**
      * @Column(type="string",  unique=true)
      */
-    private $denominazione;
+    public $denominazione;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    private $nazione;
+    public $nazione;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    private $url;
+    public $url;
 
     /**
      * Get the value of id
