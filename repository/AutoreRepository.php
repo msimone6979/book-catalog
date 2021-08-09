@@ -15,18 +15,31 @@ class AutoreRepository
         $this->em = $entity_manager;
     }
 
-    function getList($sort, $orderField)
+    function getList($sort = null, $orderField = null, $nome = null, $cognome = null, $nazionalita = null)
     {
         $sort = ($sort) ?  $sort :  ' ASC ';
         $orderField = ($orderField) ? 'a.' . $orderField : ' a.cognome, a.nome';
 
-        $query = $this->em->createQuery(
-            'SELECT a
-            FROM entities\Autore a
-            ORDER BY ' . $orderField . ' ' . $sort
-        );
+        $testparam[] = null;
 
-        return $query->getArrayResult();
+        $queryBuilder =  $this->em->createQueryBuilder('a');
+        $queryBuilder->select('a')->from('entities\Autore', 'a');
+
+        if ($nome) {
+            $queryBuilder->andWhere('a.nome LIKE :nome')
+                ->setParameter('nome', '%' . $nome . '%');
+        }
+        if ($cognome) {
+            $queryBuilder->andWhere('a.cognome LIKE :cognome')
+                ->setParameter('cognome', '%' . $cognome . '%');
+        }
+        if ($nazionalita) {
+            $queryBuilder->andWhere('a.nazionalita LIKE :nazionalita')
+                ->setParameter('nazionalita', '%' . $nazionalita . '%');
+        }
+        $queryBuilder->orderBy($orderField, $sort);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     function findById($id)

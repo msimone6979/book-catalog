@@ -45,6 +45,54 @@ isUserAuthenticated();
 
                </div>
                <div class="clearfix"></div>
+
+               <!-- Search filters -->
+               <div class="row">
+                  <div class="col-md-12 col-sm-12  ">
+                     <div class="x_panel">
+                        <div class="x_title">
+                           <h2>Filtri ricerca</h2>
+                           <ul class="nav navbar-right panel_toolbox">
+                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                           </ul>
+                           <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                           <form method="post" class="form-horizontal">
+
+
+                              <!-- Left -->
+                              <div class="col-md-6 col-xs-12">
+                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Nome </label>
+                                    <div class="col-md-7">
+                                       <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" />
+                                    </div>
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Cognome </label>
+                                    <div class="col-md-7">
+                                       <input type="text" id="cognome" name="cognome" class="form-control" placeholder="Cognome" />
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <!-- Right -->
+                              <div class="col-md-6 col-xs-12">
+                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Nazionalit&agrave; </label>
+                                    <div class="col-md-7">
+                                       <input type="text" id="nazionalita" name="nazionalita" class="form-control" placeholder="Nazionalit&agrave;" />
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
                <div class="row">
                   <div class="col-md-12 col-sm-12  ">
                      <div class="x_panel">
@@ -109,16 +157,33 @@ isUserAuthenticated();
          window.location.href = "autori-item.php?action=new";
       });
 
+      $("#nome").keyup(function() {
+         searchElem();
+      });
+
+      $("#cognome").keyup(function() {
+         searchElem();
+      });
+
+      $("#nazionalita").keyup(function() {
+         searchElem();
+      });
+
       // Ordinamento
       function searchElem(ordField, sort) {
 
-         if (typeof(ordField) === 'undefined') ordField = "";
-         if (typeof(sort) === 'undefined') sort = "";
+         if (typeof(ordField) === 'undefined') ordField = "cognome";
+         if (typeof(sort) === 'undefined') sort = "ASC";
+
+         var nome = ($("#nome").val()) ? $("#nome").val() : "";
+         var cognome = ($("#cognome").val()) ? $("#cognome").val() : "";
+         var nazionalita = ($("#nazionalita").val()) ? $("#nazionalita").val() : "";
 
          $("#tabella_autori tbody").html("");
          $.getJSON(
-            "./public/autore/list/" + ordField + "/" + sort,
+            "./public/autore/list/" + ordField + "/" + sort + "?nome=" + nome + "&cognome=" + cognome + "&nazionalita=" + nazionalita,
             function(data) {
+               $("#tabella_autori tbody").html("");
                $("#totalReturned").html(data.length);
                $.each(data, function(i, data) {
                   showElements(data);
