@@ -17,7 +17,7 @@ class CasaEditriceRepository
         $this->em = $entity_manager;
     }
 
-    function getList($sort, $orderField)
+    function getList($sort = null, $orderField = null)
     {
         $sort = ($sort) ?  $sort :  ' ASC ';
         $orderField = ($orderField) ? 'c.' . $orderField : ' c.denominazione';

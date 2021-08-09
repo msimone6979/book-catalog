@@ -29,32 +29,32 @@ class Autore
      * @GeneratedValue
      * @Column(type="smallint")
      */
-    private $id;
+    public $id;
 
     /**
      * @ManyToOne(targetEntity="entities\Volume", inversedBy="volume")
      */
-    private $volume;
+    public $volume;
 
     /**
      * @Column(name="nome", type="string")
      */
-    private $nome;
+    public $nome;
 
     /**
      * @Column(name="cognome", type="string")
      */
-    private $cognome;
+    public $cognome;
 
     /**
      * @Column(type="text", nullable=true)
      */
-    private $note;
+    public $note;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    private $nazionalita;
+    public $nazionalita;
 
     /**
      * Get the value of id

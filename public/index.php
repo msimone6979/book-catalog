@@ -355,10 +355,16 @@ $app->get('/autore/list[/{orderFiel}[/{sort}]]', function ($request, $response, 
     $sort = ($args && $args['sort']) ? $args['sort'] : null;
     $orderFiel = ($args && $args['orderFiel']) ? $args['orderFiel'] : null;
 
-    $autoreRepository = new AutoreRepository();
-    $casaEditrice = $autoreRepository->getList($sort, $orderFiel);
+    $params = $request->getQueryParams();
 
-    $payload = json_encode($casaEditrice);
+    $nome = (isset($params['nome'])) ? $params['nome'] : null;
+    $cognome = (isset($params['cognome'])) ? $params['cognome'] : null;
+    $nazionalita = (isset($params['nazionalita'])) ? $params['nazionalita'] : null;
+
+    $autoreRepository = new AutoreRepository();
+    $autori = $autoreRepository->getList($sort, $orderFiel, $nome, $cognome, $nazionalita);
+
+    $payload = json_encode($autori);
     $response->getBody()->write($payload, JSON_PRETTY_PRINT);
     return $response
         ->withHeader('Content-Type', 'application/json')
