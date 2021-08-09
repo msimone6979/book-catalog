@@ -17,17 +17,26 @@ class CasaEditriceRepository
         $this->em = $entity_manager;
     }
 
-    function getList($sort = null, $orderField = null)
+    function getList($sort = null, $orderField = null, $denominazione = null, $nazione = null)
     {
         $sort = ($sort) ?  $sort :  ' ASC ';
         $orderField = ($orderField) ? 'c.' . $orderField : ' c.denominazione';
 
-        $query = $this->em->createQuery(
-            'SELECT c
-            FROM entities\CasaEditrice c
-            ORDER BY ' . $orderField . ' ' . $sort
-        );
-        return $query->getArrayResult();
+        $queryBuilder =  $this->em->createQueryBuilder('c');
+        $queryBuilder->select('c')->from('entities\CasaEditrice', 'c');
+
+
+        if ($denominazione) {
+            $queryBuilder->andWhere('c.denominazione LIKE :denominazione')
+                ->setParameter('denominazione', '%' . $denominazione . '%');
+        }
+        if ($nazione) {
+            $queryBuilder->andWhere('c.nazione LIKE :nazione')
+                ->setParameter('nazione', '%' . $nazione . '%');
+        }
+        $queryBuilder->orderBy($orderField, $sort);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     function findById($id)

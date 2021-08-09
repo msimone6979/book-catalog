@@ -229,8 +229,13 @@ $app->get('/casa-editrice/list[/{orderFiel}[/{sort}]]', function (Request $reque
     $sort = ($args && $args['sort']) ? $args['sort'] : null;
     $orderFiel = ($args && $args['orderFiel']) ? $args['orderFiel'] : null;
 
+    $params = $request->getQueryParams();
+
+    $denominazione = (isset($params['denominazione'])) ? $params['denominazione'] : null;
+    $nazione = (isset($params['nazione'])) ? $params['nazione'] : null;
+
     $casaEditriceRepository = new CasaEditriceRepository();
-    $casaEditrice = $casaEditriceRepository->getList($sort, $orderFiel);
+    $casaEditrice = $casaEditriceRepository->getList($sort, $orderFiel, $denominazione, $nazione);
 
     $payload = json_encode($casaEditrice);
     $response->getBody()->write($payload, JSON_PRETTY_PRINT);

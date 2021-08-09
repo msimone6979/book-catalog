@@ -46,6 +46,45 @@ isUserAuthenticated();
 
                </div>
                <div class="clearfix"></div>
+
+               <!-- Search filters -->
+               <div class="row">
+                  <div class="col-md-12 col-sm-12  ">
+                     <div class="x_panel">
+                        <div class="x_title">
+                           <h2>Filtri ricerca</h2>
+                           <ul class="nav navbar-right panel_toolbox">
+                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                           </ul>
+                           <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                           <form method="post" class="form-horizontal">
+
+                              <!-- Left -->
+                              <div class="col-md-6 col-xs-12">
+                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Denominazione </label>
+                                    <div class="col-md-7">
+                                       <input type="text" id="denominazione" name="denominazione" class="form-control" placeholder="Denominazione" />
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- Right -->
+                              <div class="col-md-6 col-xs-12">
+                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Nazione </label>
+                                    <div class="col-md-7">
+                                       <input type="text" id="nazione" name="nazione" class="form-control" placeholder="Nazione" />
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
                <div class="row">
                   <div class="col-md-12 col-sm-12  ">
                      <div class="x_panel">
@@ -112,15 +151,25 @@ isUserAuthenticated();
          window.location.href = "casa-editrice-item.php?action=new";
       });
 
+      $("#denominazione").keyup(function() {
+         searchElem();
+      });
+
+      $("#nazione").keyup(function() {
+         searchElem();
+      });
       // Ordinamento
       function searchElem(ordField, sort) {
 
-         if (typeof(ordField) === 'undefined') ordField = "";
-         if (typeof(sort) === 'undefined') sort = "";
+         if (typeof(ordField) === 'undefined') ordField = "denominazione";
+         if (typeof(sort) === 'undefined') sort = "ASC";
+
+         var denominazione = ($("#denominazione").val()) ? $("#denominazione").val() : "";
+         var nazione = ($("#nazione").val()) ? $("#nazione").val() : "";
 
          $("#tabella_casa_editrici tbody").html("");
          $.getJSON(
-            "./public/casa-editrice/list/" + ordField + "/" + sort,
+            "./public/casa-editrice/list/" + ordField + "/" + sort + "?denominazione=" + denominazione + "&nazione=" + nazione,
             function(data) {
                $("#totalReturned").html(data.length);
                $.each(data, function(i, data) {
