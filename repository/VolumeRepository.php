@@ -22,8 +22,12 @@ class VolumeRepository
         $this->em = $entity_manager;
     }
 
-    function getList()
+    function getList($sort = null, $orderField = null)
     {
+
+        $sort = ($sort) ?  $sort :  ' ASC ';
+        $orderField = ($orderField) ?  $orderField : 'titolo';
+
         $dql = "SELECT a FROM entities\Autore a";
         $query = $this->em->createQuery($dql);
         $autori = $query->getResult();
@@ -36,7 +40,7 @@ class VolumeRepository
         $query = $this->em->createQuery($dql);
         $utenti = $query->getResult();
 
-        return $this->em->getRepository('entities\Volume')->findBy(array('autore' => $autori), array('titolo' => 'ASC'));
+        return $this->em->getRepository('entities\Volume')->findBy(array('autore' => $autori), array($orderField => $sort));
     }
 
     function findById($id)

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OrderBy;
 
 
 
@@ -29,80 +30,81 @@ class Volume
      * @GeneratedValue
      * @Column(type="smallint")
      */
-    private $id;
+    public $id;
 
     /**
      * @Column(type="string",  unique=true)
      */
-    private $titolo;
+    public $titolo;
 
     /**
      * @Column(type="text")
      */
-    private $descrizione;
+    public $descrizione;
 
     /**
      * @Column(type="string")
      */
-    private $genere;
+    public $genere;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    private $immagine;
+    public $immagine;
 
     /**
      * @Column(type="float", nullable=true)
      */
-    private $prezzo;
+    public $prezzo;
 
     /**
      * @Column(type="boolean", options={"default":"0"})
      */
-    private $letto = false;
+    public $letto = false;
 
     /**
      * @Column(type="boolean", options={"default":"0"})
      */
-    private $formatoEbook = false;
+    public $formatoEbook = false;
 
     /**
      * @Column(type="boolean", options={"default":"0"})
      */
-    private $formatoCartaceo = false;
+    public $formatoCartaceo = false;
 
     /**
      * @Column(type="smallint", nullable=true)
      */
-    private $anno;
+    public $anno;
 
     /**
      * @Column(type="smallint", nullable=true)
      */
-    private $pagine;
+    public $pagine;
 
     /**
      * @Column(type="string", nullable=true)
      */
-    private $lingua;
+    public $lingua;
 
     /**
      * @ManyToOne(targetEntity="Utente")
      * @JoinColumn(name="id_utente", referencedColumnName="id")
      */
-    private $utente;
+    public $utente;
 
     /**
      * @ManyToOne(targetEntity="Autore")
-     * @JoinColumn(name="id_autore", referencedColumnName="id")
+     * @JoinColumn(name="id_autore", referencedColumnName="id")     * 
+     * @OrderBy({"cognome" = "ASC"})
      */
-    private $autore;
+    public $autore;
 
     /**
      * @ManyToOne(targetEntity="CasaEditrice")
      * @JoinColumn(name="id_casa_editrice", referencedColumnName="id")
      */
-    private $casaEditrice;
+    public $casaEditrice;
 
     /**
      * Get the value of id

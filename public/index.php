@@ -37,10 +37,13 @@ $app->get('/test', function (Request $request, Response $response, $args) {
 /***
  * VOLUME
  */
-$app->get('/volume/list', function (Request $request, Response $response, $args) {
+$app->get('/volume/list[/{orderFiel}[/{sort}]]', function (Request $request, Response $response, $args) {
+
+    $sort = ($args && $args['sort']) ? $args['sort'] : null;
+    $orderFiel = ($args && $args['orderFiel']) ? $args['orderFiel'] : null;
 
     $volumeRepository = new VolumeRepository();
-    $volumi = $volumeRepository->getList();
+    $volumi = $volumeRepository->getList($sort, $orderFiel);
 
     $serializer = JMS\Serializer\SerializerBuilder::create()->build();
     $payload = $serializer->serialize($volumi, 'json');

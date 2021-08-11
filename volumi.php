@@ -93,12 +93,42 @@ isUserAuthenticated();
                                     </th>
                                     <th>Autore</th>
                                     <th>Casa Editrice</th>
-                                    <th>Genere</th>
-                                    <th>Prezzo</th>
-                                    <th>Anno</th>
-                                    <th>Pagine</th>
-                                    <th>Genere</th>
-                                    <th>Lingua</th>
+                                    <th>Genere
+                                       <a href="#" onclick='searchElem("genere","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("genere","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+                                    <th>Prezzo
+                                       <a href="#" onclick='searchElem("prezzo","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("prezzo","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+                                    <th>Anno
+                                       <a href="#" onclick='searchElem("anno","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("anno","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+                                    <th>Pagine
+                                       <a href="#" onclick='searchElem("pagine","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("pagine","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+
+                                    <th>Lingua
+                                       <a href="#" onclick='searchElem("lingua","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("lingua","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
                                     <th>Azioni</th>
                                  </tr>
                               </thead>
@@ -122,6 +152,26 @@ isUserAuthenticated();
          window.location.href = "volumi_item.php?action=new";
       });
 
+      // Ordinamento
+      function searchElem(ordField, sort) {
+
+         if (typeof(ordField) === 'undefined') ordField = "titolo";
+         if (typeof(sort) === 'undefined') sort = "ASC";
+
+         $("#tabella_volumi tbody").html("");
+         $.getJSON(
+            "./public/volume/list/" + ordField + "/" + sort,
+            function(data) {
+               $("#tabella_volumi tbody").html("");
+               $("#totalReturned").html(data.length);
+               $.each(data, function(i, data) {
+                  showElements(data);
+               });
+            }
+         );
+
+      }
+
       var imgUrlBase = '<?php echo IMG_URL_BASE ?>';
 
       function showElements(data) {
@@ -138,9 +188,7 @@ isUserAuthenticated();
             "<td>" + data.prezzo + "</td>" +
             "<td>" + data.anno + "</td>" +
             "<td>" + data.pagine + "</td>" +
-            "<td>" + data.genere + "</td>" +
             "<td>" + data.lingua + "</td>" +
-
             "<td>" +
             "<a href='./volumi_item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
             "<a href='./volumi_item.php?action=edit&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
