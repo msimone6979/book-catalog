@@ -42,8 +42,17 @@ $app->get('/volume/list[/{orderFiel}[/{sort}]]', function (Request $request, Res
     $sort = ($args && $args['sort']) ? $args['sort'] : null;
     $orderFiel = ($args && $args['orderFiel']) ? $args['orderFiel'] : null;
 
+    $params = $request->getQueryParams();
+
+    $titolo = (isset($params['titolo'])) ? $params['titolo'] : null;
+    $genere = (isset($params['genere'])) ? $params['genere'] : null;
+    $anno = (isset($params['anno'])) ? $params['anno'] : null;
+    $nome = (isset($params['nome'])) ? $params['nome'] : null;
+    $cognome = (isset($params['cognome'])) ? $params['cognome'] : null;
+    $nazionalita = (isset($params['nazionalita'])) ? $params['nazionalita'] : null;
+
     $volumeRepository = new VolumeRepository();
-    $volumi = $volumeRepository->getList($sort, $orderFiel);
+    $volumi = $volumeRepository->getList($sort, $orderFiel, $titolo, $genere, $anno, $nome, $cognome, $nazionalita);
 
     $serializer = JMS\Serializer\SerializerBuilder::create()->build();
     $payload = $serializer->serialize($volumi, 'json');
