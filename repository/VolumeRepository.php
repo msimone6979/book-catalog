@@ -22,21 +22,52 @@ class VolumeRepository
         $this->em = $entity_manager;
     }
 
-    function getList()
+    function getList($sort = null, $orderField = null, $titolo = null, $genere = null, $anno = null, $nome = null, $cognome = null, $nazionalita = null)
     {
-        $dql = "SELECT a FROM entities\Autore a";
-        $query = $this->em->createQuery($dql);
-        $autori = $query->getResult();
 
-        $dql = "SELECT ca FROM entities\CasaEditrice ca";
-        $query = $this->em->createQuery($dql);
-        $caseEditrici = $query->getResult();
+        $sort = ($sort) ?  $sort :  ' ASC ';
+        $orderField = ($orderField) ? 'v.' . $orderField : ' v.titolo';
 
-        $dql = "SELECT u FROM entities\Utente u";
-        $query = $this->em->createQuery($dql);
-        $utenti = $query->getResult();
+        $queryBuilder =  $this->em->createQueryBuilder('v');
+        $queryBuilder
+            ->select('v', 'a')
+            ->from('entities\Volume', 'v')
+            ->leftJoin('v.autore', 'a')
+            ->leftJoin('v.casaEditrice', 'ca');
 
-        return $this->em->getRepository('entities\Volume')->findBy(array('autore' => $autori), array('titolo' => 'ASC'));
+        if ($titolo) {
+            $queryBuilder->andWhere('v.titolo LIKE :titolo')
+                ->setParameter('titolo', '%' . $titolo . '%');
+        }
+
+        if ($genere) {
+            $queryBuilder->andWhere('v.genere LIKE :genere')
+                ->setParameter('genere', '%' . $genere . '%');
+        }
+
+        if ($anno) {
+            $queryBuilder->andWhere('v.anno = :anno')
+                ->setParameter('anno', $anno);
+        }
+
+        if ($nome) {
+            $queryBuilder->andWhere('a.nome LIKE :nome')
+                ->setParameter('nome',  '%' . $nome . '%');
+        }
+
+        if ($cognome) {
+            $queryBuilder->andWhere('a.cognome LIKE :cognome')
+                ->setParameter('cognome',  '%' . $cognome . '%');
+        }
+
+        if ($nazionalita) {
+            $queryBuilder->andWhere('a.nazionalita LIKE :nazionalita')
+                ->setParameter('nazionalita',  '%' . $nazionalita . '%');
+        }
+
+        $queryBuilder->orderBy($orderField, $sort);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     function findById($id)

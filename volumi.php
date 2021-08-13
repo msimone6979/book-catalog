@@ -47,6 +47,78 @@ isUserAuthenticated();
 
                </div>
                <div class="clearfix"></div>
+
+               <!-- Search filters -->
+               <div class="row">
+                  <div class="col-md-12 col-sm-12  ">
+                     <div class="x_panel">
+                        <div class="x_title">
+                           <h2>Filtri ricerca</h2>
+                           <ul class="nav navbar-right panel_toolbox">
+                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                           </ul>
+                           <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                           <form method="post" class="form-horizontal">
+
+                              <!-- Left -->
+                              <div class="col-md-6 col-xs-12">
+                                 <fieldset>
+                                    <legend>Volume:</legend>
+                                    <div class="form-group">
+                                       <label class="col-md-3 control-label">Titolo </label>
+                                       <div class="col-md-7">
+                                          <input type="text" id="titolo" name="titolo" class="form-control" placeholder="Titolo" />
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                       <label class="col-md-3 control-label">Genere </label>
+                                       <div class="col-md-7">
+                                          <input type="text" id="genere" name="genere" class="form-control" placeholder="Genere" />
+                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                       <label class="col-md-3 control-label">Anno </label>
+                                       <div class="col-md-7">
+                                          <input type="text" id="anno" name="anno" class="form-control" placeholder="Anno" />
+                                       </div>
+                                    </div>
+                                 </fieldset>
+                              </div>
+
+                              <!-- Right -->
+                              <div class="col-md-6 col-xs-12">
+                                 <fieldset>
+                                    <legend>Autore:</legend>
+                                    <div class="form-group">
+                                       <label class="col-md-3 control-label">Nome </label>
+                                       <div class="col-md-7">
+                                          <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome" />
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                       <label class="col-md-3 control-label">Cognome </label>
+                                       <div class="col-md-7">
+                                          <input type="text" id="cognome" name="cognome" class="form-control" placeholder="Cognome" />
+                                       </div>
+                                    </div>
+                                    <div class="form-group">
+                                       <label class="col-md-3 control-label">Nazionalit&agrave; </label>
+                                       <div class="col-md-7">
+                                          <input type="text" id="nazionalita" name="nazionalita" class="form-control" placeholder="Nazionalit&agrave;" />
+                                       </div>
+                                    </div>
+                                 </fieldset>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
                <div class="row">
                   <div class="col-md-12 col-sm-12  ">
                      <div class="x_panel">
@@ -93,12 +165,42 @@ isUserAuthenticated();
                                     </th>
                                     <th>Autore</th>
                                     <th>Casa Editrice</th>
-                                    <th>Genere</th>
-                                    <th>Prezzo</th>
-                                    <th>Anno</th>
-                                    <th>Pagine</th>
-                                    <th>Genere</th>
-                                    <th>Lingua</th>
+                                    <th>Genere
+                                       <a href="#" onclick='searchElem("genere","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("genere","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+                                    <th>Prezzo
+                                       <a href="#" onclick='searchElem("prezzo","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("prezzo","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+                                    <th>Anno
+                                       <a href="#" onclick='searchElem("anno","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("anno","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+                                    <th>Pagine
+                                       <a href="#" onclick='searchElem("pagine","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("pagine","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
+
+                                    <th>Lingua
+                                       <a href="#" onclick='searchElem("lingua","asc")'>
+                                          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                       </a><a style="float:righ" href="#" onclick='searchElem("lingua","desc")'>
+                                          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                       </a>
+                                    </th>
                                     <th>Azioni</th>
                                  </tr>
                               </thead>
@@ -122,6 +224,57 @@ isUserAuthenticated();
          window.location.href = "volumi_item.php?action=new";
       });
 
+      $("#titolo").keyup(function() {
+         searchElem();
+      });
+
+      $("#genere").keyup(function() {
+         searchElem();
+      });
+
+      $("#anno").keyup(function() {
+         searchElem();
+      });
+
+      $("#nome").keyup(function() {
+         searchElem();
+      });
+
+      $("#cognome").keyup(function() {
+         searchElem();
+      });
+
+      $("#nazionalita").keyup(function() {
+         searchElem();
+      });
+
+      // Ordinamento
+      function searchElem(ordField, sort) {
+
+         if (typeof(ordField) === 'undefined') ordField = "titolo";
+         if (typeof(sort) === 'undefined') sort = "ASC";
+
+         var titolo = ($("#titolo").val()) ? $("#titolo").val() : "";
+         var genere = ($("#genere").val()) ? $("#genere").val() : "";
+         var anno = ($("#anno").val()) ? $("#anno").val() : "";
+         var nome = ($("#nome").val()) ? $("#nome").val() : "";
+         var cognome = ($("#cognome").val()) ? $("#cognome").val() : "";
+         var nazionalita = ($("#nazionalita").val()) ? $("#nazionalita").val() : "";
+
+         $("#tabella_volumi tbody").html("");
+         $.getJSON(
+            "./public/volume/list/" + ordField + "/" + sort + "?titolo=" + titolo + "&genere=" + genere + "&anno=" + anno + "&nome=" + nome + "&cognome=" + cognome + "&nazionalita=" + nazionalita,
+            function(data) {
+               $("#tabella_volumi tbody").html("");
+               $("#totalReturned").html(data.length);
+               $.each(data, function(i, data) {
+                  showElements(data);
+               });
+            }
+         );
+
+      }
+
       var imgUrlBase = '<?php echo IMG_URL_BASE ?>';
 
       function showElements(data) {
@@ -138,9 +291,7 @@ isUserAuthenticated();
             "<td>" + data.prezzo + "</td>" +
             "<td>" + data.anno + "</td>" +
             "<td>" + data.pagine + "</td>" +
-            "<td>" + data.genere + "</td>" +
             "<td>" + data.lingua + "</td>" +
-
             "<td>" +
             "<a href='./volumi_item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
             "<a href='./volumi_item.php?action=edit&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
