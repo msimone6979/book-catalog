@@ -256,20 +256,17 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass("alert-danger");
-
-                    $("#esito").addClass("alert-success");
-                    var html = "Inserimento avvenuto con successo";
-                    $("#esito").html(html);
-                    $("#esito").show();
+                    bootbox.alert("Inserimento avvenuto con successo", function() {
+                        window.location.href = "casa-editrice.php";
+                    })
                 }).fail(function(msg) {
                     $("#esito").removeClass("alert-danger");
 
                     if (msg.status === 200) {
-                        $("#esito").addClass("alert-success");
-                        var html = "Inserimento avvenuto con successo";
-                        $("#esito").html(html);
-                        $("#esito").show();
+
+                        bootbox.alert("Inserimento avvenuto con successo", function() {
+                            window.location.href = "casa-editrice.php";
+                        })
                     } else {
                         $("#esito").addClass("alert-danger");
                         $("#esito").html("Errore durante l'operazione di inserimento '" + msg.responseText + "'");

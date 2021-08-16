@@ -5,7 +5,7 @@ include_once 'inc/inc.conf.php';
 isUserAuthenticated();
 
 $action = (isset($_GET["action"])) ? $_GET["action"] : "";
-$id = (isset($_GET["id"])) ? $_GET["id"] : "";
+$id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
 ?>
 <!DOCTYPE html>
@@ -64,6 +64,11 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                 <div class="x_title">
                                     <h2>Dettaglio libro</h2>
                                     <ul class="nav navbar-right panel_toolbox">
+                                        <?php if ($action == "view") { ?>
+                                            <li>
+                                                <button id="viewScheda" type="button" class="btn btn-round btn-primary"><i class="fa fa-newspaper-o"></i> Vista Scheda</button>
+                                            </li>
+                                        <?php } ?>
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -299,6 +304,10 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             window.location.href = "volumi.php";
         });
 
+        $("#viewScheda").click(function() {
+            window.location.href = "volumi_show.php?id=" + <?php echo $id ?>;
+        });
+
         $('#salva').click(function(e) {
             e.preventDefault();
 
@@ -362,24 +371,20 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass("alert-success");
-                    $("#esito").removeClass("alert-danger");
-                    $("#esito").removeClass("alert-warning");
 
-                    $("#esito").addClass("alert-success");
-                    var html = "Modifica avvenuta con successo";
-                    $("#esito").html(html);
-                    $("#esito").show();
+                    bootbox.alert("Modifica avvenuta con successo", function() {
+                        window.location.href = "volumi_item.php?action=view&id=" + id;
+                    })
                 }).fail(function(msg) {
                     $("#esito").removeClass("alert-success");
                     $("#esito").removeClass("alert-danger");
                     $("#esito").removeClass("alert-warning");
 
                     if (msg.status === 200) {
-                        $("#esito").addClass("alert-success");
-                        var html = "Modifica avvenuta con successo";
-                        $("#esito").html(html);
-                        $("#esito").show();
+
+                        bootbox.alert("Modifica avvenuta con successo", function() {
+                            window.location.href = "volumi_item.php?action=view&id=" + id;
+                        })
                     } else {
                         $("#esito").addClass("alert-danger");
                         $("#esito").html("Errore durante l'operazione di modifica");
@@ -462,10 +467,10 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     $("#esito").removeClass("alert-warning");
 
                     if (msg.status === 200) {
-                        $("#esito").addClass("alert-success");
-                        var html = "Inserimento avvenuto con successo";
-                        $("#esito").html(html);
-                        $("#esito").show();
+
+                        bootbox.alert("Inserimento avvenuto con successo", function() {
+                            window.location.href = "volumi.php";
+                        })
                     } else {
                         $("#esito").addClass("alert-danger");
                         $("#esito").html("Errore durante l'operazione di inserimento '" + msg.responseText + "'");
@@ -515,22 +520,22 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
         }
 
-        function init() {
-
-            $('#esito').hide();
-
-            popolaCasaEditrici();
-            popolaAutore();
-
+        function loadData() {
             <?php if ($id) { ?>
                 $.getJSON(
                     "./public/volume/" + <?php echo $id ?>,
                     function(data) {
                         var imgUrlBase = '<?php echo IMG_URL_BASE ?>';
                         showElements(data, imgUrlBase);
-                        popolaCasaEditrici(data.casa_editrice.id);
-                        popolaAutore(data.autore.id);
-                        initPreviewImage(data.immagine);
+                        if (data.casa_editrice && data.casa_editrice.id) {
+                            popolaCasaEditrici(data.casa_editrice.id);
+                        }
+                        if (data.autore && data.autore.id) {
+                            popolaAutore(data.autore.id);
+                        }
+                        if (data.immagine) {
+                            initPreviewImage(data.immagine);
+                        }
                     }
                 ).fail(function() {
                     bootbox.alert({
@@ -541,6 +546,18 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
             <?php } else { ?>
                 initPreviewImage();
             <?php } ?>
+        }
+
+        function init() {
+
+            $('#esito').hide();
+            $("#scheda_view").hide();
+            $("#viewItem").hide();
+
+            popolaCasaEditrici();
+            popolaAutore();
+
+            loadData();
         }
 
         function elimina(id) {
@@ -592,8 +609,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     language: 'it',
                     uploadUrl: '<?php echo WEB_ROOT; ?>/upload-image.php',
                     overwriteInitial: true,
-                    resizeImage: true,
-                    maxImageWidth: "80%",
+                    resizeImage: false,
                     initialPreviewFileType: 'image',
                     initialCaption: image,
                     initialPreview: [urlImage],
@@ -612,8 +628,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     language: 'it',
                     uploadUrl: '<?php echo WEB_ROOT; ?>/upload-image.php',
                     overwriteInitial: true,
-                    resizeImage: true,
-                    maxImageWidth: "80%"
+                    resizeImage: false
 
                 });
             }

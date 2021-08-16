@@ -42,3 +42,34 @@
 .profile {
   margin-top: 15px;
 }
+
+.logo-preview {
+  width: 300px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+.col-info {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 50%;
+  -moz-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 100%;
+  padding: 0 24px;
+}
+
+.volume-titolo {
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+
+.volume-descrizione {
+  text-align: left;
+  line-height: 2em;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.volume-dettagli {
+  margin-top: 20px;
+}

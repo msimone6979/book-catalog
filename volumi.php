@@ -282,11 +282,16 @@ isUserAuthenticated();
 
          var imageUrl = getImagePath(data.immagine, imgUrlBase);
 
+         var nomeAutore = (data.autore && data.autore.nome) ? data.autore.nome : "";
+         var cognomeAutore = (data.autore && data.autore.cognome) ? data.autore.cognome : "";
+         var nominativoAutore = (nomeAutore && cognomeAutore) ? nomeAutore + " " + cognomeAutore : "-";
+         var casaEditrice = (data.casa_editrice && data.casa_editrice.denominazione) ? data.casa_editrice.denominazione : "-";
+
          var tblRow = "<tr onclick='viewPage(" + data.id + ")'>" +
             "<td> <img class='immagine-small' src='" + imageUrl + "'> </td> " +
             "<td> " + data.titolo + "</td>" +
-            "<td>" + data.autore.cognome + ' ' + data.autore.nome + "</td>" +
-            "<td>" + data.casa_editrice.denominazione + "</td>" +
+            "<td>" + nominativoAutore + "</td>" +
+            "<td>" + casaEditrice + "</td>" +
             "<td>" + data.genere + "</td>" +
             "<td>" + data.prezzo + "</td>" +
             "<td>" + data.anno + "</td>" +
