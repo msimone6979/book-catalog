@@ -317,8 +317,8 @@ $app->post('/casa-editrice', function (Request $request, Response $response) {
 
         $request_data = $request->getParsedBody();
         $denominazione = $request_data['denominazione'];
-        $nazione = $request_data['nazione'];
-        $url = $request_data['url'];
+        $nazione = (isset($request_data['nazione'])) ? $request_data['nazione'] : "";
+        $url = (isset($request_data['url'])) ?  $request_data['url'] : "";
 
         $casaEditrice = new CasaEditrice();
         $casaEditrice->setDenominazione($denominazione);

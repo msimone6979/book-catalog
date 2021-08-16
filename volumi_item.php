@@ -197,13 +197,21 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Casa Editrice <span class="text-danger">*</span></label>
-                                                <div class="col-md-7">
+                                                <?php $classItem = ($action == 'view') ?  ("col-md-7") : "col-md-6"; ?>
+                                                <div class="<?= $classItem ?>">
                                                     <select id="idCasaEditrice" name="idCasaEditrice" class="form-control col-md-7 col-xs-12" <?php if ($action == "view") {
                                                                                                                                                     echo "disabled";
                                                                                                                                                 } ?>>
 
                                                     </select>
+
                                                 </div>
+                                                <?php
+                                                if ($action == "new") { ?>
+                                                    <div class="col-md-1">
+                                                        <button id="newCasaEditrice" type="button" class="btn btn-round btn-primary" data-toggle="modal" data-target="#casaEditriceModal"><i class="fa fa-plus"></i> </button>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
 
                                             <div class="form-group">
@@ -636,6 +644,86 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
         $(function() {
             init();
+        });
+    </script>
+
+
+    <!-- Modal New Casa Editrice -->
+    <div class="modal fade" id="casaEditriceModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Inserimento Casa Editrice</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Denominazione <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input type="text" id="denominazioneCasaEditrice" name="denominazioneCasaEditrice" placeholder="Denominazione" class="form-control" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="salvaCasaEditrice" name="salva" type="submit" class="btn btn-default btn-primary">Salva</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('#salvaCasaEditrice').click(function(e) {
+            e.preventDefault();
+
+            var denominazione = $("#denominazioneCasaEditrice").val();
+
+            // Controllo campi obbligatori
+            if (!denominazione) {
+
+                bootbox.alert({
+                    title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
+                    message: "Il campo 'Denominazione' &egrave; obbligatorio.",
+                    className: 'text-danger animate__animated animate__rubberBand'
+                });
+
+            } else {
+
+                let data = {
+                    "denominazione": denominazione
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: "./public/casa-editrice",
+                    contentType: 'application/json',
+                    data: JSON.stringify(data), // access in body
+                }).done(function() {
+                    bootbox.alert("Inserimento avvenuto con successo", function() {
+                        $('#casaEditriceModal').modal('hide');
+                        popolaCasaEditrici();
+                    })
+                }).fail(function(msg) {
+
+                    if (msg.status === 200) {
+                        bootbox.alert("Inserimento avvenuto con successo", function() {
+                            $('#casaEditriceModal').modal('hide');
+                            popolaCasaEditrici();
+                        })
+                    } else {
+
+                        bootbox.alert({
+                            title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
+                            message: msg.responseText,
+                            className: 'text-danger animate__animated animate__rubberBand'
+                        });
+                    }
+
+                });
+            }
         });
     </script>
 </body>
