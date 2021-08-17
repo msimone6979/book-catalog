@@ -342,7 +342,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                     bootbox.alert({
                                         title: "<i class='fa fa-exclamation'></i> Errore durante la cancellazione",
                                         message: data.responseText,
-                                        className: 'animate__animated animate__rubberBand'
+                                        className: 'text-danger animate__animated animate__rubberBand'
                                     });
                                 }
                             }
