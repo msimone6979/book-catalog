@@ -452,8 +452,8 @@ $app->post('/autore', function (Request $request, Response $response) {
         $request_data = $request->getParsedBody();
         $nome = $request_data['nome'];
         $cognome = $request_data['cognome'];
-        $note = $request_data['note'];
-        $nazionalita = $request_data['nazionalita'];
+        $note = (isset($request_data['note']))  ? $request_data['note'] : "";
+        $nazionalita = (isset($request_data['nazionalita'])) ? $request_data['nazionalita'] : "";
 
         $autore = new Autore();
         $autore->setNome($nome);
