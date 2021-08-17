@@ -7,14 +7,6 @@ Doctrine command line:
 ## Update schema
 
 ```
-php bin/console make:migration
-```
-
-```
-php bin/console doctrine:migrations:migrate
-```
-
-```
 php vendor/bin/doctrine orm:schema-tool:update --force
 ```
 
