@@ -38,7 +38,12 @@ class Volume
     public $titolo;
 
     /**
-     * @Column(type="text")
+     * @Column(type="string",  nullable=true)
+     */
+    public $sottotitolo;
+
+    /**
+     * @Column(type="text", nullable=true)
      */
     public $descrizione;
 
@@ -53,7 +58,7 @@ class Volume
     public $immagine;
 
     /**
-     * @Column(type="float", nullable=true)
+     * @Column(type="float", nullable=true, options={"default":"0"})
      */
     public $prezzo;
 
@@ -78,7 +83,7 @@ class Volume
     public $anno;
 
     /**
-     * @Column(type="smallint", nullable=true)
+     * @Column(type="smallint", nullable=true, options={"default":"0"})
      */
     public $pagine;
 
@@ -132,6 +137,26 @@ class Volume
     public function getTitolo()
     {
         return $this->titolo;
+    }
+
+    /**
+     * Set the value of sottotitolo
+     *
+     * @return  self
+     */
+    public function setSottotitolo($sottotitolo)
+    {
+        $this->sottotitolo = $sottotitolo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sottotitolo
+     */
+    public function getSottotitolo()
+    {
+        return $this->sottotitolo;
     }
 
     /**

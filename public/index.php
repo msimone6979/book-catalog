@@ -93,6 +93,7 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
 
         $request_data = $request->getParsedBody();
         $titolo = $request_data['titolo'];
+        $sottotitolo =  $request_data['sottotitolo'];
         $descrizione = $request_data['descrizione'];
         $genere = $request_data['genere'];
         $anno = $request_data['anno'];
@@ -116,6 +117,7 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
         $casaEditrice = $casaEditriceRepository->findById($idCasaEditrice);
 
         $volume->setTitolo($titolo);
+        $volume->setSottotitolo($sottotitolo);
         $volume->setDescrizione($descrizione);
         $volume->setGenere($genere);
         $volume->setAnno($anno);
@@ -149,6 +151,7 @@ $app->post('/volume', function (Request $request, Response $response) {
         $request_data = $request->getParsedBody();
 
         $titolo = $request_data['titolo'];
+        $sottotitolo = $request_data['sottotitolo'];
         $descrizione = $request_data['descrizione'];
         $genere = $request_data['genere'];
         $anno = $request_data['anno'];
@@ -173,6 +176,7 @@ $app->post('/volume', function (Request $request, Response $response) {
 
         $volume = new Volume();
         $volume->setTitolo($titolo);
+        $volume->setSottotitolo($sottotitolo);
         $volume->setDescrizione($descrizione);
         $volume->setGenere($genere);
         $volume->setAnno($anno);

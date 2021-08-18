@@ -86,6 +86,7 @@ class VolumeRepository
         $v = $this->em->getRepository('entities\Volume')->find($volume->getId());
 
         $v->setTitolo($volume->getTitolo());
+        $v->setSottoTitolo($volume->getSottotitolo());
         $v->setDescrizione($volume->getDescrizione());
         $v->setGenere($volume->getGenere());
         $v->setAnno($volume->getAnno());
