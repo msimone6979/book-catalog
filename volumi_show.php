@@ -101,6 +101,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                             <div class="col-info">
 
                                                 <h2 id="titolo"></h2>
+                                                <h3 id="sottotitolo"></h3>
                                                 di <span id="idAutore" class="volume-titolo"></span> (Autore)
 
                                                 <div id="descrizione" class="volume-descrizione"></div>
@@ -209,15 +210,19 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         function showElements(data, imgUrlBase) {
 
             $('#titolo').html(data.titolo);
+            $('#sottotitolo').html(data.sottotitolo);
             $('#descrizione').html(data.descrizione);
             $('#pagine').html(data.pagine);
             $('#genere').html(data.genere);
             $('#lingua').html(data.lingua);
             $('#anno').html(data.anno);
             $('#prezzo').html(data.prezzo);
-            $("#idCasaEditrice").html(data.casa_editrice.denominazione);
-            $("#idAutore").html(data.autore.cognome + " " + data.autore.nome);
-
+            if (data.casa_editrice) {
+                $("#idCasaEditrice").html(data.casa_editrice.denominazione);
+            }
+            if (data.autore) {
+                $("#idAutore").html(data.autore.cognome + " " + data.autore.nome);
+            }
             var imageUrl = getImagePath(data.immagine, imgUrlBase);
             $('#immagine').attr('src', imageUrl);
 

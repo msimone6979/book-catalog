@@ -122,7 +122,18 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Descrizione <span class="text-danger">*</span></label>
+                                                <label class="col-md-3 control-label">Sottotitolo </label>
+                                                <div class="col-md-7">
+                                                    <?php if ($action == "view") { ?>
+                                                        <span class="form-control" id="sottotitolo"></span>
+                                                    <?php } else { ?>
+                                                        <input type="text" id="sottotitolo" name="sottotitolo" placeholder="Sottotitolo" class="form-control" />
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Descrizione </label>
                                                 <div class="col-md-7">
                                                     <?php if ($action == "view") { ?>
                                                         <textarea class="form-control textarea" id="descrizione" rows="6" class="form-control"></textarea>
@@ -333,6 +344,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
             var id = $("#id").val();
             var titolo = $("#titolo").val();
+            var sottotitolo = $("#sottotitolo").val();
             var descrizione = $("#descrizione").val();
             var genere = $("#genere").val();
             var anno = $("#anno").val();
@@ -353,20 +365,21 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
             var formatoEbook = ($("#formatoEbook").prop('checked')) ? true : false;
 
             // Controllo campi obbligatori
-            if (!titolo || !descrizione || !idCasaEditrice || !idAutore) {
+            if (!titolo || !idCasaEditrice || !idAutore) {
                 $("#esito").removeClass("alert-success");
                 $("#esito").removeClass("alert-danger");
                 $("#esito").removeClass("alert-warning");
 
 
                 $("#esito").addClass("alert-danger");
-                $("#esito").html("I campi 'Titolo', 'Descrizione', 'Casa Editrice' e 'Autore' sono obbligatori");
+                $("#esito").html("I campi 'Titolo', 'Casa Editrice' e 'Autore' sono obbligatori");
                 $("#esito").show();
 
             } else {
 
                 let data = {
                     "titolo": titolo,
+                    "sottotitolo": sottotitolo,
                     "descrizione": descrizione,
                     "genere": genere,
                     "anno": anno,
@@ -419,10 +432,11 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
             $("#esito").removeClass("alert-warning");
 
             var titolo = $("#titolo").val();
+            var sottotitolo = $("#sottotitolo").val();
             var descrizione = $("#descrizione").val();
             var genere = $("#genere").val();
             var anno = $("#anno").val();
-            var pagine = $("#pagine").val();
+            var pagine = ($("#pagine").val()) ? $("#pagine").val() : 0;
             var lingua = $("#lingua").val();
             var prezzo = $("#prezzo").val();
 
@@ -436,19 +450,20 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
             var formatoEbook = ($("#formatoEbook").prop('checked')) ? true : false;
 
             // Controllo campi obbligatori
-            if (!titolo || !descrizione || !idCasaEditrice || !idAutore) {
+            if (!titolo || !idCasaEditrice || !idAutore) {
                 $("#esito").removeClass("alert-success");
                 $("#esito").removeClass("alert-danger");
                 $("#esito").removeClass("alert-warning");
 
                 $("#esito").addClass("alert-danger");
-                $("#esito").html("I campi 'Titolo', 'Descrizione', 'Casa Editrice' e 'Autore' sono obbligatori");
+                $("#esito").html("I campi 'Titolo',  'Casa Editrice' e 'Autore' sono obbligatori");
                 $("#esito").show();
 
             } else {
 
                 let data = {
                     "titolo": titolo,
+                    "sottotitolo": sottotitolo,
                     "descrizione": descrizione,
                     "genere": genere,
                     "anno": anno,
@@ -502,6 +517,10 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
             $('#titolo').value = data.titolo;
             $('#titolo').html(data.titolo);
             $('#titolo').val(data.titolo);
+
+            $('#sottotitolo').value = data.sottotitolo;
+            $('#sottotitolo').html(data.sottotitolo);
+            $('#sottotitolo').val(data.sottotitolo);
 
             $('#descrizione').value = data.descrizione;
             $('#descrizione').html(data.descrizione);
