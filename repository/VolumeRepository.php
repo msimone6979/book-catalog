@@ -22,7 +22,7 @@ class VolumeRepository
         $this->em = $entity_manager;
     }
 
-    function getList($sort = null, $orderField = null, $titolo = null, $genere = null, $anno = null, $nome = null, $cognome = null, $nazionalita = null)
+    function getList($sort = null, $orderField = null, $titolo = null, $genere = null, $anno = null, $nome = null, $cognome = null, $nazionalita = null, $isWish = false)
     {
 
         $sort = ($sort) ?  $sort :  ' ASC ';
@@ -63,6 +63,12 @@ class VolumeRepository
         if ($nazionalita) {
             $queryBuilder->andWhere('a.nazionalita LIKE :nazionalita')
                 ->setParameter('nazionalita',  '%' . $nazionalita . '%');
+        }
+
+        if ($isWish) {
+            $queryBuilder->andWhere('v.isWish = TRUE');
+        } else {
+            $queryBuilder->andWhere('v.isWish = FALSE');
         }
 
         $queryBuilder->orderBy($orderField, $sort);

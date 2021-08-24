@@ -50,9 +50,10 @@ $app->get('/volume/list[/{orderFiel}[/{sort}]]', function (Request $request, Res
     $nome = (isset($params['nome'])) ? $params['nome'] : null;
     $cognome = (isset($params['cognome'])) ? $params['cognome'] : null;
     $nazionalita = (isset($params['nazionalita'])) ? $params['nazionalita'] : null;
+    $isWish = (isset($params['isWish'])) ? $params['isWish'] : false;
 
     $volumeRepository = new VolumeRepository();
-    $volumi = $volumeRepository->getList($sort, $orderFiel, $titolo, $genere, $anno, $nome, $cognome, $nazionalita);
+    $volumi = $volumeRepository->getList($sort, $orderFiel, $titolo, $genere, $anno, $nome, $cognome, $nazionalita, $isWish);
 
     $serializer = JMS\Serializer\SerializerBuilder::create()->build();
     $payload = $serializer->serialize($volumi, 'json');
@@ -92,6 +93,8 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
         $id = $args['id'];
 
         $request_data = $request->getParsedBody();
+
+        $isWish = $request_data['isWish'];
         $titolo = $request_data['titolo'];
         $sottotitolo =  $request_data['sottotitolo'];
         $descrizione = $request_data['descrizione'];
@@ -116,6 +119,7 @@ $app->put('/volume/{id}', function (Request $request, Response $response, $args)
         $casaEditriceRepository = new CasaEditriceRepository();
         $casaEditrice = $casaEditriceRepository->findById($idCasaEditrice);
 
+        $volume->setIsWish($isWish);
         $volume->setTitolo($titolo);
         $volume->setSottotitolo($sottotitolo);
         $volume->setDescrizione($descrizione);
@@ -150,6 +154,7 @@ $app->post('/volume', function (Request $request, Response $response) {
 
         $request_data = $request->getParsedBody();
 
+        $isWish = boolval($request_data['isWish']);
         $titolo = $request_data['titolo'];
         $sottotitolo = $request_data['sottotitolo'];
         $descrizione = $request_data['descrizione'];
@@ -175,6 +180,7 @@ $app->post('/volume', function (Request $request, Response $response) {
         $volumeRepository = new VolumeRepository();
 
         $volume = new Volume();
+        $volume->setIsWish($isWish);
         $volume->setTitolo($titolo);
         $volume->setSottotitolo($sottotitolo);
         $volume->setDescrizione($descrizione);

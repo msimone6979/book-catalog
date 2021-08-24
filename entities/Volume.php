@@ -112,6 +112,11 @@ class Volume
     public $casaEditrice;
 
     /**
+     * @Column(type="boolean", options={"default":"0"})
+     */
+    public $isWish = false;
+
+    /**
      * Get the value of id
      */
     public function getId()
@@ -416,6 +421,26 @@ class Volume
     public function setCasaEditrice($casaEditrice)
     {
         $this->casaEditrice = $casaEditrice;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isWish
+     */
+    public function isWish()
+    {
+        return $this->isWish();
+    }
+
+    /**
+     * Set the value of isWish
+     *
+     * @return  self
+     */
+    public function setIsWish($isWish)
+    {
+        $this->isWish = $isWish;
 
         return $this;
     }

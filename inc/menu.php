@@ -28,6 +28,9 @@
                <li>
                   <a href="volumi.php"><i class="fa fa-book"></i>Volumi</a>
                </li>
+               <li>
+                  <a href="wish.php"><i class="fa fa-shopping-cart"></i>Lista dei desideri</a>
+               </li>
             </ul>
          </div>
       </div>

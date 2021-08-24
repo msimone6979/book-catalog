@@ -6,6 +6,7 @@ isUserAuthenticated();
 
 $action = (isset($_GET["action"])) ? $_GET["action"] : "";
 $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
+$isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
 
 ?>
 <!DOCTYPE html>
@@ -87,6 +88,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                                     <form action="#" id="form" method="post" class="form-horizontal" enctype="multipart/form-data">
                                         <input type="hidden" id="action" name="action" value="<?php echo $action; ?> ">
                                         <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+                                        <input type="hidden" id="isWish" name="isWish" value="<?php echo $isWish; ?>">
+
 
                                         <!-- Left -->
                                         <div class="col-md-6 col-xs-12">
@@ -243,16 +246,18 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                                                 <?php } ?>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Letto </label>
-                                                <div class="col-md-7">
-                                                    <?php if ($action == "view") { ?>
-                                                        <input id="letto" type="checkbox" class="form-control">
-                                                    <?php } else { ?>
-                                                        <input type="checkbox" id="letto" name="letto" class="form-control" />
-                                                    <?php } ?>
+                                            <?php if (!$isWish) { ?>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Letto </label>
+                                                    <div class="col-md-7">
+                                                        <?php if ($action == "view") { ?>
+                                                            <input id="letto" type="checkbox" class="form-control">
+                                                        <?php } else { ?>
+                                                            <input type="checkbox" id="letto" name="letto" class="form-control" />
+                                                        <?php } ?>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <?php } ?>
 
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Formato Cartaceo </label>
@@ -276,13 +281,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                                             </div>
 
 
-                                        </div>
-
-                                        <!-- ESITO  -->
-                                        <div class="clearfix"></div>
-                                        <div class="mt50"></div>
-                                        <div class="col-xs-12">
-                                            <div id="esito" class="alert alert-danger"></div>
                                         </div>
 
                                         <div class="row">
@@ -338,19 +336,16 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
         $('#salva').click(function(e) {
             e.preventDefault();
 
-            $("#esito").removeClass("alert-success");
-            $("#esito").removeClass("alert-danger");
-            $("#esito").removeClass("alert-warning");
-
             var id = $("#id").val();
+            var isWish = $("#isWish").val();
             var titolo = $("#titolo").val();
             var sottotitolo = $("#sottotitolo").val();
             var descrizione = $("#descrizione").val();
             var genere = $("#genere").val();
             var anno = $("#anno").val();
-            var pagine = $("#pagine").val();
+            var pagine = ($("#pagine").val()) ? $("#pagine").val() : 0;
             var lingua = $("#lingua").val();
-            var prezzo = $("#prezzo").val();
+            var prezzo = ($("#prezzo").val()) ? $("#prezzo").val() : 0;
 
             var captionName = $.find(".file-caption-info");
             var immagine = "";
@@ -366,18 +361,18 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
             // Controllo campi obbligatori
             if (!titolo || !idCasaEditrice || !idAutore) {
-                $("#esito").removeClass("alert-success");
-                $("#esito").removeClass("alert-danger");
-                $("#esito").removeClass("alert-warning");
 
 
-                $("#esito").addClass("alert-danger");
-                $("#esito").html("I campi 'Titolo', 'Casa Editrice' e 'Autore' sono obbligatori");
-                $("#esito").show();
+                bootbox.alert({
+                    title: "<i class='fa fa-exclamation'></i> Errore durante la cancellazione",
+                    message: "I campi 'Titolo', 'Casa Editrice' e 'Autore' sono obbligatori",
+                    className: 'text-danger animate__animated animate__rubberBand'
+                });
 
             } else {
 
                 let data = {
+                    "isWish": isWish,
                     "titolo": titolo,
                     "sottotitolo": sottotitolo,
                     "descrizione": descrizione,
@@ -405,9 +400,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                         window.location.href = "volumi_item.php?action=view&id=" + id;
                     })
                 }).fail(function(msg) {
-                    $("#esito").removeClass("alert-success");
-                    $("#esito").removeClass("alert-danger");
-                    $("#esito").removeClass("alert-warning");
 
                     if (msg.status === 200) {
 
@@ -415,11 +407,13 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                             window.location.href = "volumi_item.php?action=view&id=" + id;
                         })
                     } else {
-                        $("#esito").addClass("alert-danger");
-                        $("#esito").html("Errore durante l'operazione di modifica");
-                        $("#esito").show();
-                    }
 
+                        bootbox.alert({
+                            title: "<i class='fa fa-exclamation'></i> Errore durante la cancellazione",
+                            message: "Errore durante l'operazione di modifica",
+                            className: 'text-danger animate__animated animate__rubberBand'
+                        });
+                    }
                 });
             }
         });
@@ -427,10 +421,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
         $('#create').click(function(e) {
             e.preventDefault();
 
-            $("#esito").removeClass("alert-success");
-            $("#esito").removeClass("alert-danger");
-            $("#esito").removeClass("alert-warning");
 
+            var isWish = $("#isWish").val();
             var titolo = $("#titolo").val();
             var sottotitolo = $("#sottotitolo").val();
             var descrizione = $("#descrizione").val();
@@ -438,10 +430,14 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
             var anno = $("#anno").val();
             var pagine = ($("#pagine").val()) ? $("#pagine").val() : 0;
             var lingua = $("#lingua").val();
-            var prezzo = $("#prezzo").val();
+            var prezzo = ($("#prezzo").val()) ? $("#prezzo").val() : 0;
 
             var captionName = $.find(".file-caption-info");
-            var immagine = captionName[0].textContent;
+            var immagine = "";
+            if (captionName && captionName.length > 0) {
+                immagine = captionName[0].textContent;
+            }
+
 
             var idCasaEditrice = $("#idCasaEditrice").val();
             var idAutore = $("#idAutore").val();
@@ -451,17 +447,17 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
             // Controllo campi obbligatori
             if (!titolo || !idCasaEditrice || !idAutore) {
-                $("#esito").removeClass("alert-success");
-                $("#esito").removeClass("alert-danger");
-                $("#esito").removeClass("alert-warning");
 
-                $("#esito").addClass("alert-danger");
-                $("#esito").html("I campi 'Titolo',  'Casa Editrice' e 'Autore' sono obbligatori");
-                $("#esito").show();
+                bootbox.alert({
+                    title: "<i class='fa fa-exclamation'></i> Errore durante l'inserimento",
+                    message: "I campi 'Titolo',  'Casa Editrice' e 'Autore' sono obbligatori",
+                    className: 'text-danger animate__animated animate__rubberBand'
+                });
 
             } else {
 
                 let data = {
+                    "isWish": isWish,
                     "titolo": titolo,
                     "sottotitolo": sottotitolo,
                     "descrizione": descrizione,
@@ -484,28 +480,32 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass("alert-success");
-                    $("#esito").removeClass("alert-danger");
-                    $("#esito").removeClass("alert-warning");
 
-                    $("#esito").addClass("alert-success");
-                    var html = "Inserimento avvenuto con successo";
-                    $("#esito").html(html);
-                    $("#esito").show();
+                    bootbox.alert("Inserimento avvenuto con successo", function() {
+                        if (isWish) {
+                            window.location.href = "wish.php";
+                        } else {
+                            window.location.href = "volumi.php";
+                        }
+                    });
+
                 }).fail(function(msg) {
-                    $("#esito").removeClass("alert-success");
-                    $("#esito").removeClass("alert-danger");
-                    $("#esito").removeClass("alert-warning");
 
                     if (msg.status === 200) {
-
                         bootbox.alert("Inserimento avvenuto con successo", function() {
-                            window.location.href = "volumi.php";
+                            if (isWish) {
+                                window.location.href = "wish.php"
+                            } else {
+                                window.location.href = "volumi.php";
+                            }
                         })
                     } else {
-                        $("#esito").addClass("alert-danger");
-                        $("#esito").html("Errore durante l'operazione di inserimento '" + msg.responseText + "'");
-                        $("#esito").show();
+
+                        bootbox.alert({
+                            title: "<i class='fa fa-exclamation'></i> Errore durante l'operazione di inserimento",
+                            message: msg.responseText,
+                            className: 'text-danger animate__animated animate__rubberBand'
+                        });
                     }
 
                 });
@@ -585,13 +585,8 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
 
         function init() {
 
-            $('#esito').hide();
-            $("#scheda_view").hide();
-            $("#viewItem").hide();
-
             popolaCasaEditrici();
             popolaAutore();
-
             loadData();
         }
 
@@ -609,14 +604,12 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "0";
                                         window.location.href = "volumi.php";
                                     });
                                 } else if (data.status === 404) {
-                                    $("#esito").removeClass("alert-success");
-                                    $("#esito").removeClass("alert-danger");
-                                    $("#esito").removeClass("alert-warning");
 
-                                    $('#esito').addClass('alert alert-danger');
-                                    $('#esito').html("Errore durante la cancellazione del volume");
-                                    $('#esito').show();
-                                    $('#esito').fadeOut(2500);
+                                    bootbox.alert({
+                                        title: "<i class='fa fa-exclamation'></i> Errore durante la cancellazione",
+                                        message: "Errore durante la cancellazione del volume",
+                                        className: 'text-danger animate__animated animate__rubberBand'
+                                    });
                                 }
                             }
                         });
