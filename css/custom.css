@@ -73,3 +73,48 @@
 .volume-dettagli {
   margin-top: 20px;
 }
+
+.navbar-nav {
+  float: right !important;
+}
+
+.top_nav .navbar-right {
+  margin: 13px;
+  width: auto;
+  float: right;
+}
+
+.navbar-nav .open .dropdown-menu {
+  position: absolute;
+  background: #fff;
+  margin-top: 0;
+  border: 1px solid #d9dee4;
+  -webkit-box-shadow: none;
+  right: 0;
+  left: auto;
+  width: 220px !important;
+}
+.navbar-nav .dropdown-menu {
+  position: static;
+  float: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: inherit;
+  width: 100%;
+  padding: 12px 20px;
+}
+
+.profile_link {
+  color: #e7e7e7;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.profile_link:hover {
+  color: #e7e7e7;
+}
