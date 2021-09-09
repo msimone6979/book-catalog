@@ -121,13 +121,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                                             </div>
                                         </div>
 
-                                        <!-- ESITO  -->
-                                        <div class="clearfix"></div>
-                                        <div class="mt50"></div>
-                                        <div class="col-xs-12">
-                                            <div id="esito" class="alert alert-danger"></div>
-                                        </div>
-
                                         <div class="row">
                                             <div class="col-md-offset-2 col-md-9 mt-50">
                                                 <div id="editButtons" class=" pull-right">
@@ -171,7 +164,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         $('#salva').click(function(e) {
             e.preventDefault();
 
-            $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
 
             var id = $("#id").val();
             var nome = $("#nome").val();
@@ -181,11 +173,12 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
             // Controllo campi obbligatori
             if (!nome || !cognome) {
-                $("#esito").removeClass("alert-success", "alert-danger", "alert-warning");
 
-                $("#esito").addClass("alert-danger");
-                $("#esito").html("I campi 'Nome' e 'Cognome' sono obbligatori");
-                $("#esito").show();
+                bootbox.alert({
+                    title: "<i class='fa fa-exclamation'></i> Errore durante la modifica",
+                    message: "I campi 'Nome' e 'Cognome' sono obbligatori",
+                    className: 'text-danger animate__animated animate__rubberBand'
+                });
 
             } else {
 
@@ -202,26 +195,20 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
                 }).done(function() {
-                    $("#esito").removeClass("alert-danger", "alert-warning");
+                    if (msg.status === 200) {
+                        bootbox.alert("Modifica avvenuta con successo", function() {});
+                    }
 
-
-                    $("#esito").addClass("alert-success");
-                    var html = "Modifica avvenuta con successo";
-                    $("#esito").html(html);
-                    $("#esito").show();
                 }).error(function(msg) {
 
-                    $("#esito").removeClass("alert-danger", "alert-warning");
-
                     if (msg.status === 200) {
-                        $("#esito").addClass("alert-success");
-                        var html = "Modifica avvenuta con successo";
-                        $("#esito").html(html);
-                        $("#esito").show();
+                        bootbox.alert("Modifica avvenuta con successo", function() {})
                     } else {
-                        $("#esito").addClass("alert-danger");
-                        $("#esito").html("Errore durante l'operazione di modifica '" + msg.responseText + "'");
-                        $("#esito").show();
+                        bootbox.alert({
+                            title: "<i class='fa fa-exclamation'></i> Errore durante l'operazione di modifica",
+                            message: msg.responseText,
+                            className: 'text-danger animate__animated animate__rubberBand'
+                        });
                     }
 
                 });
@@ -231,7 +218,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         $('#create').click(function(e) {
             e.preventDefault();
 
-
             var nome = $("#nome").val();
             var cognome = $("#cognome").val();
             var nazionalita = $("#nazionalita").val();
@@ -239,10 +225,12 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
 
             // Controllo campi obbligatori
             if (!nome || !cognome) {
-                $("#esito").removeClass("alert-success", "alert-danger", "alert-warning");
-                $("#esito").addClass("alert-danger");
-                $("#esito").html("I campi 'Nome' e 'Cognome' sono obbligatori");
-                $("#esito").show();
+
+                bootbox.alert({
+                    title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
+                    message: "I campi 'Nome' e 'Cognome' sono obbligatori",
+                    className: 'text-danger animate__animated animate__rubberBand'
+                });
 
             } else {
 
@@ -254,24 +242,25 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
                 }
 
                 $.ajax({
-                    type: 'POST',
-                    url: "./public/autore",
-                    contentType: 'application/json',
-                    data: JSON.stringify(data), // access in body
-                }).fail(function(msg) {
-                    $("#esito").removeClass("alert-danger");
+                        type: 'POST',
+                        url: "./public/autore",
+                        contentType: 'application/json',
+                        data: JSON.stringify(data), // access in body
+                    }).done(function(msg) {
 
-                    if (msg.status === 201) {
                         bootbox.alert("Inserimento avvenuto con successo", function() {
                             window.location.href = "autori.php";
                         })
-                    } else {
-                        $("#esito").addClass("alert-danger");
-                        $("#esito").html("Errore durante l'operazione di inserimento '" + msg.responseText + "'");
-                        $("#esito").show();
-                    }
+                    })
+                    .fail(function(error) {
 
-                });
+                        bootbox.alert({
+                            title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
+                            message: error.responseText,
+                            className: 'text-danger animate__animated animate__rubberBand'
+                        });
+
+                    });
             }
         });
 
@@ -296,8 +285,6 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : "";
         }
 
         function init() {
-
-            $('#esito').hide();
 
             <?php if ($id) { ?>
                 $.getJSON(

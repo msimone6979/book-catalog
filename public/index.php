@@ -321,7 +321,7 @@ $app->put('/casa-editrice/{id}', function (Request $request, Response $response,
 });
 
 $app->addBodyParsingMiddleware();
-$app->post('/casa-editrice', function (Request $request, Response $response) {
+$app->post('/casa-editrice', function (Request $request, Slim\Http\Response $response) {
 
     try {
 
@@ -336,10 +336,10 @@ $app->post('/casa-editrice', function (Request $request, Response $response) {
         $casaEditrice->setUrl($url);
 
         $casaEditriceRepository = new CasaEditriceRepository();
-        $casaEditriceRepository->save($casaEditrice);
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+        $idCasaEditrice = $casaEditriceRepository->save($casaEditrice);
+
+        return $response->withHeader('Content-Type', 'application/json')
+            ->withJson('{"id" : ' . $idCasaEditrice . '}', 201);
     } catch (Exception $exception) {
         $response->getBody()->write($exception->getMessage());
         return $response
@@ -455,7 +455,7 @@ $app->put('/autore/{id}', function (Request $request, Response $response, $args)
 });
 
 $app->addBodyParsingMiddleware();
-$app->post('/autore', function (Request $request, Response $response) {
+$app->post('/autore', function (Request $request, Slim\Http\Response $response) {
 
     try {
 
@@ -472,11 +472,10 @@ $app->post('/autore', function (Request $request, Response $response) {
         $autore->setNazionalita($nazionalita);
 
         $autoreRepository = new AutoreRepository();
-        $autoreRepository->save($autore);
+        $idAutore = $autoreRepository->save($autore);
 
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(201);
+        return $response->withHeader('Content-Type', 'application/json')
+            ->withJson('{"id" : ' . $idAutore . '}', 201);
     } catch (Exception $exception) {
         $response->getBody()->write($exception->getMessage());
         return $response

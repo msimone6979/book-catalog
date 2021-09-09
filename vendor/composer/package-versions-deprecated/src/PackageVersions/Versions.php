@@ -67,6 +67,7 @@ final class Versions
   'psr/http-server-middleware' => '1.0.1@2296f45510945530b9dceb8bcedb5cb84d40c5f5',
   'psr/log' => '1.1.4@d49695b909c3b7628b6289db5479a1c204601f11',
   'ralouphie/getallheaders' => '3.0.3@120b605dfeb996808c31b6477290a714d356e822',
+  'slim/http' => '1.2.0@3bc9d61b5243cab0d75c89d778bd69464de07354',
   'slim/psr7' => '1.4@0dca983ca32a26f4a91fb11173b7b9eaee29e9d6',
   'slim/slim' => '4.8.1@c8934c35d9d98b1a1df9f99ee69b77a59e0aa820',
   'symfony/cache' => 'v5.3.3@82962a497f090e95e3b357c21bf6f54991c9b1a5',
@@ -116,7 +117,7 @@ final class Versions
   'sebastian/version' => '3.0.2@c6c1022351a901512170118436c764e473f6de8c',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.10.0@6964c76c7804814a842473e0c8fd15bab0f18e25',
-  '__root__' => 'dev-master@9177135c104b04db07f3912d5840bcc7511411a7',
+  '__root__' => 'dev-master@301d6bc7791d89e6cdefcaaf41deea554017a678',
 );
 
     private function __construct()

@@ -58,6 +58,7 @@ class CasaEditriceRepository
         try {
             $this->em->persist($casaEditrice);
             $this->em->flush();
+            return $casaEditrice->getId();
         } catch (UniqueConstraintViolationException $e) {
             throw new Exception("Esiste già una casa editrice con la denominazione specificata");
         }
