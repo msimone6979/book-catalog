@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9177135c104b04db07f3912d5840bcc7511411a7',
+    'reference' => '301d6bc7791d89e6cdefcaaf41deea554017a678',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9177135c104b04db07f3912d5840bcc7511411a7',
+      'reference' => '301d6bc7791d89e6cdefcaaf41deea554017a678',
     ),
     'composer/package-versions-deprecated' => 
     array (
@@ -429,8 +429,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '^1.0',
+        0 => '^1.0',
+        1 => '1.0',
       ),
     ),
     'psr/http-message' => 
@@ -642,6 +642,15 @@
       array (
       ),
       'reference' => 'c6c1022351a901512170118436c764e473f6de8c',
+    ),
+    'slim/http' => 
+    array (
+      'pretty_version' => '1.2.0',
+      'version' => '1.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3bc9d61b5243cab0d75c89d778bd69464de07354',
     ),
     'slim/psr7' => 
     array (

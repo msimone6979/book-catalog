@@ -52,6 +52,7 @@ class AutoreRepository
         try {
             $this->em->persist($autore);
             $this->em->flush();
+            return $autore->getId();
         } catch (Exception $e) {
             $previous = $e->getPrevious();
             $errorCode = $previous->getCode();

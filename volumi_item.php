@@ -631,6 +631,7 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
                     initialPreviewFileType: 'image',
                     initialCaption: image,
                     initialPreview: [urlImage],
+                    initialPreviewDownloadUrl: urlImage,
                     initialPreviewConfig: [{
                         caption: image,
                         downloadUrl: urlImage,
@@ -676,6 +677,19 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
                                 <input type="text" id="denominazioneCasaEditrice" name="denominazioneCasaEditrice" placeholder="Denominazione" class="form-control" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Nazione </label>
+                            <div class="col-md-7">
+                                <input type="text" id="nazioneCasaEditrice" name="nazioneCasaEditrice" placeholder="Nazione" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Sito Web </label>
+                            <div class="col-md-7">
+                                <input type="text" id="urlCasaEditrice" name="urlCasaEditrice" placeholder="Sito Web" class="form-control" />
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -710,6 +724,18 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
                                 <input type="text" id="cognomeAutore" name="cognomeAutore" placeholder="Cognome" class="form-control" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Nazionalit&agrave; </label>
+                            <div class="col-md-7">
+                                <input type="text" id="nazionalitaAutore" name="nazionalitaAutore" placeholder="Nazionalit&agrave; " class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Note </label>
+                            <div class="col-md-7">
+                                <textarea id="noteAutore" name="noteAutore" rows="6" class="form-control" placeholder="Note"></textarea>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -724,6 +750,8 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
             e.preventDefault();
 
             var denominazione = $("#denominazioneCasaEditrice").val();
+            var nazione = $("#nazioneCasaEditrice").val();
+            var url = $("#urlCasaEditrice").val();
 
             // Controllo campi obbligatori
             if (!denominazione) {
@@ -737,7 +765,9 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
             } else {
 
                 let data = {
-                    "denominazione": denominazione
+                    "denominazione": denominazione,
+                    "nazione": nazione,
+                    "url": url
                 }
 
                 $.ajax({
@@ -745,27 +775,19 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
                     url: "./public/casa-editrice",
                     contentType: 'application/json',
                     data: JSON.stringify(data), // access in body
-                }).done(function() {
+                }).done(function(msg) {
                     bootbox.alert("Inserimento avvenuto con successo", function() {
                         $('#casaEditriceModal').modal('hide');
-                        popolaCasaEditrici();
+                        var data = JSON.parse(msg);
+                        popolaCasaEditrici(data.id);
                     })
                 }).fail(function(msg) {
 
-                    if (msg.status === 200) {
-                        bootbox.alert("Inserimento avvenuto con successo", function() {
-                            $('#casaEditriceModal').modal('hide');
-                            popolaCasaEditrici();
-                        })
-                    } else {
-
-                        bootbox.alert({
-                            title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
-                            message: msg.responseText,
-                            className: 'text-danger animate__animated animate__rubberBand'
-                        });
-                    }
-
+                    bootbox.alert({
+                        title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
+                        message: msg.responseText,
+                        className: 'text-danger animate__animated animate__rubberBand'
+                    });
                 });
             }
         });
@@ -776,6 +798,8 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
 
             var nome = $("#nomeAutore").val();
             var cognome = $("#cognomeAutore").val();
+            var nazionalitaAutore = $("#nazionalitaAutore").val();
+            var noteAutore = $("#noteAutore").val();
 
             // Controllo campi obbligatori
             if (!nome || !cognome) {
@@ -790,7 +814,9 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
 
                 let data = {
                     "nome": nome,
-                    "cognome": cognome
+                    "cognome": cognome,
+                    "nazionalita": nazionalitaAutore,
+                    "note": noteAutore
                 }
 
                 $.ajax({
@@ -798,21 +824,21 @@ $isWish = (isset($_GET["isWish"])) ? boolval($_GET["isWish"]) : boolval(false);
                         url: "./public/autore",
                         contentType: 'application/json',
                         data: JSON.stringify(data), // access in body
-                    }).done(function() {})
-                    .fail(function(msg) {
+                    }).done(function(msg) {
+                        bootbox.alert("Inserimento avvenuto con successo", function() {
+                            $('#autoreModal').modal('hide');
+                            var data = JSON.parse(msg);
+                            popolaAutore(data.id);
+                        })
+                    })
+                    .fail(function(error) {
 
-                        if (msg.status === 201) {
-                            bootbox.alert("Inserimento avvenuto con successo", function() {
-                                $('#autoreModal').modal('hide');
-                                popolaAutore();
-                            })
-                        } else {
-                            bootbox.alert({
-                                title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
-                                message: msg.responseText,
-                                className: 'text-danger animate__animated animate__rubberBand'
-                            });
-                        }
+                        bootbox.alert({
+                            title: "<i class='fa fa-exclamation'></i> Errore durante l'insermento",
+                            message: error.responseText,
+                            className: 'text-danger animate__animated animate__rubberBand'
+                        });
+
 
                     });
             }
