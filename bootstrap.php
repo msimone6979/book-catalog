@@ -1,6 +1,6 @@
 <?php
 require_once "vendor/autoload.php";
-
+require_once "inc/inc.conf.php";
 
 // Setup Doctrine
 $configuration = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
@@ -10,10 +10,10 @@ $configuration = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration
 
 // Setup connection parameters
 $connection_parameters = [
-    'dbname' => 'catalogo_libri',
-    'user' => 'bookuser',
-    'password' => 'bookpassword',
-    'host' => '127.0.0.1',
+    'dbname' => $db_name,
+    'user' => $db_user,
+    'password' => $db_password,
+    'host' => $db_host,
     'driver' => 'pdo_mysql'
 ];
 
