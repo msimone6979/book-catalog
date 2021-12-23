@@ -4,30 +4,24 @@ define("MODE", "LOCAL"); // LOCAL, ONLINE  (modalità di esecuzione server)
 
 $documentRoot =  $_SERVER["DOCUMENT_ROOT"];
 
-$token = 'c4T4log0l1br1';
+$token = '------';
 define("TOKEN", $token);
 
 
 if (MODE == "LOCAL") {
 
-	$db_user = "bookuser";
-	$db_password = "bookpassword";
-	$db_name = "catalogo_libri";
-	$db_host = "127.0.0.1";
-	$db_port = "3306";
+    $db_user = "-----";
+    $db_password = "------";
+    $db_name = "-------";
+    $db_host = "127.0.0.1";
+    $db_port = "3306";
 } else if (MODE == "ONLINE") {
-	/*
-	$db_user="Sql322110";
-	$db_password="783ea49e";
-	$db_name="Sql322110_4";
-	$db_host="62.149.150.85";//"localhost";
-	$db_port="3306";
-	*/
-	$db_user = "Sql922490";
-	$db_password = "ye21u39x3s";
-	$db_name = "Sql922490_1";
-	$db_host = "62.149.150.170"; //"62.149.150.85";//"localhost";
-	$db_port = "3306";
+
+    $db_user = "------";
+    $db_password = "-------";
+    $db_name = "-------";
+    $db_host = "--------";
+    $db_port = "-----";
 }
 
 define("WEB_ROOT", "http://" . $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"]);

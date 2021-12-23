@@ -21,3 +21,6 @@ vendor/*
 
 # Images
 /upload/copertine/*
+
+# Configuration files
+inc/inc.conf.php
