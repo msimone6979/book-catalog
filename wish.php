@@ -266,6 +266,7 @@ isUserAuthenticated();
             "<td>" +
             "<a href='./volumi_item.php?action=view&id=" + data.id + "' type='button' class='btn btn-success btn-sm mr-10'><i class='fa fa-search' aria-hidden='true'></i> </a>&nbsp;" +
             "<a href='./volumi_item.php?action=edit&isWish=true&id=" + data.id + "' type='button' class='btn btn-warning btn-sm mr-10'><i class='fa fa-edit' aria-hidden='true'></i> </a>&nbsp;" +
+            "<a onclick='javascript:buy(" + data.id + ");' type='button' class='btn btn-default btn-sm mr-10'><i class='fa fa-shopping-cart' aria-hidden='true'></i> </a>&nbsp;" +
             "<a onclick='javascript:elimina(" + data.id + ");' type='button' class='btn btn-danger btn-sm mr-10'><i class='fa fa-trash' aria-hidden='true'></i> </a>" +
             "</td>" +
             "</tr>";
@@ -298,19 +299,50 @@ isUserAuthenticated();
                      type: 'DELETE',
                      contentType: "application/json",
                      error: function(data) {
-                        $("#esito").removeClass(["alert-success", "alert-danger", "alert-warning"]);
 
                         if (data.status === 200) {
                            bootbox.alert(
                               "Cancellazione avvenuta con successo",
                               function() {
-                                 location.reload()
+                                 init();
                               });
                         } else {
-                           $('#esito').addClass('alert alert-danger');
-                           $('#esito').html("Errore durante la cancellazione del volume");
-                           $('#esito').show();
-                           $('#esito').fadeOut(2500);
+                           bootbox.alert({
+                              title: "<i class='fa fa-exclamation'></i> Errore durante l'acquisto",
+                              message: "Errore durante la cancellazione del volume",
+                              className: 'text-danger animate__animated animate__rubberBand'
+                           });
+                        }
+                     }
+                  });
+               }
+            });
+         }
+      }
+
+      function buy(id) {
+         event.stopPropagation();
+         if (id) {
+            bootbox.confirm("Sei sicuro di voler acquistare il volume selezionato ?", function(result) {
+               if (result == true) {
+                  var jqxhr = $.ajax({
+                     url: "./public/volume/" + id + "/buy",
+                     type: 'POST',
+                     contentType: "application/json",
+                     error: function(msg) {
+
+                        if (msg.status === 200) {
+                           bootbox.alert(
+                              "Acquisto avvenuto con successo",
+                              function() {
+                                 init();
+                              });
+                        } else {
+                           bootbox.alert({
+                              title: "<i class='fa fa-exclamation'></i> Errore durante l'acquisto",
+                              message: msg.responseText,
+                              className: 'text-danger animate__animated animate__rubberBand'
+                           });
                         }
                      }
                   });
