@@ -81,6 +81,13 @@ class VolumeRepository
         return $this->em->getRepository('entities\Volume')->findOneBy(array('id' => $id));
     }
 
+    function buy($volume)
+    {
+        $volume->setIsWish(false);
+        $this->em->persist($volume);
+        $this->em->flush();
+    }
+
     function delete($volume)
     {
         $this->em->remove($volume);

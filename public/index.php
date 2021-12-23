@@ -208,6 +208,27 @@ $app->post('/volume', function (Request $request, Response $response) {
     }
 });
 
+$app->addBodyParsingMiddleware();
+$app->post('/volume/{id}/buy', function (Request $request, Response $response, $args) {
+
+    try {
+
+        $id = $args['id'];
+        $volumeRepository = new VolumeRepository();
+        $volume = $volumeRepository->findById($id);
+        $volumeRepository->buy($volume);
+
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    } catch (Exception $exception) {
+        $response->getBody()->write($exception->getMessage());
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
 $app->delete('/volume/{id}', function (Request $request, Response $response, $args) {
 
     $id = $args['id'];
